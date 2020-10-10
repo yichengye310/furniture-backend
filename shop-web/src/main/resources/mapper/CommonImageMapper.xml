@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.CommonImageMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.CommonImage" >
+    <id column="imageID" property="imageID" jdbcType="INTEGER" />
+    <result column="relationID" property="relationID" jdbcType="INTEGER" />
+    <result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <result column="flag" property="flag" jdbcType="SMALLINT" />
+  </resultMap>
+  <resultMap id="ProductBaseResultMap" type="com.example.springboot.dto.CommonImageDTO" >
+    <id column="imageID" property="imageID" jdbcType="INTEGER" />
+    <result column="relationID" property="relationID" jdbcType="INTEGER" />
+    <result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <result column="flag" property="flag" jdbcType="SMALLINT" />
+    <association property="product" javaType="com.example.springboot.dto.ProductDTO" column="{productID=relationID}" select="com.example.springboot.mapper.ProductMapper.selectByPrimaryKeyForOther" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    imageID, relationID, imageUrl, state, flag
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+    <if test="relationID != null">
+      AND relationID = #{relationID}
+    </if>
+    <if test="imageUrl != null">
+      AND imageUrl = #{imageUrl}
+    </if>
+    <if test="flag != null">
+      AND flag = #{flag}
+    </if>
+    AND state = 1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.CommonImageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_common_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_common_image
+    where imageID = #{imageID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_common_image
+    where imageID = #{imageID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.CommonImageExample" >
+    delete from ylfs_common_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.CommonImage" >
+    insert into ylfs_common_image (imageID, relationID, imageUrl, 
+      state,flag)
+    values (#{imageID,jdbcType=INTEGER}, #{relationID,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{state,jdbcType=SMALLINT},#{flag,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.CommonImage" >
+    insert into ylfs_common_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="imageID != null" >
+        imageID,
+      </if>
+      <if test="relationID != null" >
+        relationID,
+      </if>
+      <if test="imageUrl != null" >
+        imageUrl,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="imageID != null" >
+        #{imageID,jdbcType=INTEGER},
+      </if>
+      <if test="relationID != null" >
+        #{relationID,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.CommonImageExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_common_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_common_image
+    <set >
+      <if test="record.imageID != null" >
+        imageID = #{record.imageID,jdbcType=INTEGER},
+      </if>
+      <if test="record.relationID != null" >
+        relationID = #{record.relationID,jdbcType=INTEGER},
+      </if>
+      <if test="record.imageUrl != null" >
+        imageUrl = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_common_image
+    set imageID = #{record.imageID,jdbcType=INTEGER},
+      relationID = #{record.relationID,jdbcType=INTEGER},
+      imageUrl = #{record.imageUrl,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT},
+      flag = #{record.flag,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.CommonImage" >
+    update ylfs_common_image
+    <set >
+      <if test="relationID != null" >
+        relationID = #{relationID,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null" >
+        imageUrl = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where imageID = #{imageID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.CommonImage" >
+    update ylfs_common_image
+    set relationID = #{relationID,jdbcType=INTEGER},
+      imageUrl = #{imageUrl,jdbcType=VARCHAR},
+      state = #{state,jdbcType=SMALLINT},
+      flag = #{flag,jdbcType=SMALLINT}
+    where imageID = #{imageID,jdbcType=INTEGER}
+  </update>
+  <select id="selectList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from ylfs_common_image
+    <include refid="whereSql"></include>
+  </select>
+  <select id="selectListRelationProduct" resultMap="ProductBaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from ylfs_common_image
+    <include refid="whereSql"></include>
+  </select>
+  <select id="selectProductTitleImgByRelationID" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_common_image
+    where relationID = #{relationID,jdbcType=INTEGER} and state=1 and flag=1
+  </select>
+  <select id="selectProductLimitedTimeTitleImgByRelationID" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_common_image
+    where relationID = #{relationID,jdbcType=INTEGER} and state=1 and flag=5
+  </select>
+  <select id="selectProductCommentsImgByRelationID" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_common_image
+    where relationID = #{relationID,jdbcType=INTEGER} and state=1 and flag=3
+  </select>
+  <delete id="deleteByProductID" parameterType="java.lang.Integer" >
+    delete from ylfs_common_image
+    <include refid="whereSql"></include>
+  </delete>
+</mapper>

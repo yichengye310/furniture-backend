@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.UserShoppingcartMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.UserShoppingcart">
+    <id column="cartItemID" jdbcType="INTEGER" property="cartItemID" />
+    <result column="productID" jdbcType="INTEGER" property="productID" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="productStandardID" jdbcType="INTEGER" property="productStandardID" />
+    <result column="productStandard" jdbcType="VARCHAR" property="productStandard" />
+    <result column="productColourID" jdbcType="INTEGER" property="productColourID" />
+    <result column="productColour" jdbcType="VARCHAR" property="productColour" />
+    <result column="productTitleImage" jdbcType="VARCHAR" property="productTitleImage" />
+    <result column="userID" jdbcType="VARCHAR" property="userID" />
+    <result column="addedNum" jdbcType="INTEGER" property="addedNum" />
+    <result column="marketPrice" jdbcType="INTEGER" property="marketPrice" />
+    <result column="realPrice" jdbcType="INTEGER" property="realPrice" />
+    <result column="itemCreatedTime" jdbcType="BIGINT" property="itemCreatedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cartItemID, productID, productName, productStandardID, productStandard, productColourID, 
+    productColour, productTitleImage, userID, addedNum, marketPrice, realPrice,
+    itemCreatedTime
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.UserShoppingcartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_user_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_user_shoppingcart
+    where cartItemID = #{cartItemID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_user_shoppingcart
+    where cartItemID = #{cartItemID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.UserShoppingcartExample">
+    delete from ylfs_user_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.UserShoppingcart">
+    insert into ylfs_user_shoppingcart (cartItemID, productID, productName, 
+      productStandardID, productStandard, productColourID, 
+      productColour, productTitleImage, userID,
+      addedNum, marketPrice,
+      realPrice, itemCreatedTime)
+    values (#{cartItemID,jdbcType=INTEGER}, #{productID,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
+      #{productStandardID,jdbcType=INTEGER}, #{productStandard,jdbcType=VARCHAR}, #{productColourID,jdbcType=INTEGER}, 
+      #{productColour,jdbcType=VARCHAR}, #{productTitleImage,jdbcType=VARCHAR}, #{userID,jdbcType=VARCHAR}, 
+      #{addedNum,jdbcType=INTEGER}, #{marketPrice,jdbcType=INTEGER},
+      #{realPrice,jdbcType=INTEGER}, #{itemCreatedTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.UserShoppingcart">
+    insert into ylfs_user_shoppingcart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cartItemID != null">
+        cartItemID,
+      </if>
+      <if test="productID != null">
+        productID,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="productStandardID != null">
+        productStandardID,
+      </if>
+      <if test="productStandard != null">
+        productStandard,
+      </if>
+      <if test="productColourID != null">
+        productColourID,
+      </if>
+      <if test="productColour != null">
+        productColour,
+      </if>
+      <if test="productTitleImage != null">
+        productTitleImage,
+      </if>
+      <if test="userID != null">
+        userID,
+      </if>
+      <if test="addedNum != null">
+        addedNum,
+      </if>
+      <if test="marketPrice != null">
+        marketPrice,
+      </if>
+      <if test="realPrice != null">
+        realPrice,
+      </if>
+      <if test="itemCreatedTime != null">
+        itemCreatedTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cartItemID != null">
+        #{cartItemID,jdbcType=INTEGER},
+      </if>
+      <if test="productID != null">
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productStandardID != null">
+        #{productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="productStandard != null">
+        #{productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="productColourID != null">
+        #{productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="productColour != null">
+        #{productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitleImage != null">
+        #{productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userID != null">
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="addedNum != null">
+        #{addedNum,jdbcType=INTEGER},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        #{realPrice,jdbcType=INTEGER},
+      </if>
+      <if test="itemCreatedTime != null">
+        #{itemCreatedTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.UserShoppingcartExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_user_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_user_shoppingcart
+    <set>
+      <if test="record.cartItemID != null">
+        cartItemID = #{record.cartItemID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productID != null">
+        productID = #{record.productID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productStandardID != null">
+        productStandardID = #{record.productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productStandard != null">
+        productStandard = #{record.productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productColourID != null">
+        productColourID = #{record.productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productColour != null">
+        productColour = #{record.productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTitleImage != null">
+        productTitleImage = #{record.productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userID != null">
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addedNum != null">
+        addedNum = #{record.addedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.marketPrice != null">
+        marketPrice = #{record.marketPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.realPrice != null">
+        realPrice = #{record.realPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemCreatedTime != null">
+        itemCreatedTime = #{record.itemCreatedTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_user_shoppingcart
+    set cartItemID = #{record.cartItemID,jdbcType=INTEGER},
+      productID = #{record.productID,jdbcType=INTEGER},
+      productName = #{record.productName,jdbcType=VARCHAR},
+      productStandardID = #{record.productStandardID,jdbcType=INTEGER},
+      productStandard = #{record.productStandard,jdbcType=VARCHAR},
+      productColourID = #{record.productColourID,jdbcType=INTEGER},
+      productColour = #{record.productColour,jdbcType=VARCHAR},
+      productTitleImage = #{record.productTitleImage,jdbcType=VARCHAR},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      addedNum = #{record.addedNum,jdbcType=INTEGER},
+      marketPrice = #{record.marketPrice,jdbcType=INTEGER},
+      realPrice = #{record.realPrice,jdbcType=INTEGER},
+      itemCreatedTime = #{record.itemCreatedTime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.UserShoppingcart">
+    update ylfs_user_shoppingcart
+    <set>
+      <if test="productID != null">
+        productID = #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productStandardID != null">
+        productStandardID = #{productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="productStandard != null">
+        productStandard = #{productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="productColourID != null">
+        productColourID = #{productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="productColour != null">
+        productColour = #{productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitleImage != null">
+        productTitleImage = #{productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userID != null">
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="addedNum != null">
+        addedNum = #{addedNum,jdbcType=INTEGER},
+      </if>
+      <if test="marketPrice != null">
+        marketPrice = #{marketPrice,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        realPrice = #{realPrice,jdbcType=INTEGER},
+      </if>
+      <if test="itemCreatedTime != null">
+        itemCreatedTime = #{itemCreatedTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where cartItemID = #{cartItemID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.UserShoppingcart">
+    update ylfs_user_shoppingcart
+    set productID = #{productID,jdbcType=INTEGER},
+      productName = #{productName,jdbcType=VARCHAR},
+      productStandardID = #{productStandardID,jdbcType=INTEGER},
+      productStandard = #{productStandard,jdbcType=VARCHAR},
+      productColourID = #{productColourID,jdbcType=INTEGER},
+      productColour = #{productColour,jdbcType=VARCHAR},
+      productTitleImage = #{productTitleImage,jdbcType=VARCHAR},
+      userID = #{userID,jdbcType=VARCHAR},
+      addedNum = #{addedNum,jdbcType=INTEGER},
+      marketPrice = #{marketPrice,jdbcType=INTEGER},
+      realPrice = #{realPrice,jdbcType=INTEGER},
+      itemCreatedTime = #{itemCreatedTime,jdbcType=BIGINT}
+    where cartItemID = #{cartItemID,jdbcType=INTEGER}
+  </update>
+</mapper>

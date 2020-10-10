@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.OrderPurchaseOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.OrderPurchaseOrder" >
+    <id column="orderID" property="orderID" jdbcType="INTEGER" />
+    <result column="purchaseOrderID" property="purchaseOrderID" jdbcType="VARCHAR" />
+    <result column="orderPaymentState" property="orderPaymentState" jdbcType="SMALLINT" />
+    <result column="orderState" property="orderState" jdbcType="SMALLINT" />
+    <result column="paidMode" property="paidMode" jdbcType="SMALLINT" />
+    <result column="paidRecordID" property="paidRecordID" jdbcType="INTEGER" />
+    <result column="productID" property="productID" jdbcType="INTEGER" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="productColourID" property="productColourID" jdbcType="INTEGER" />
+    <result column="productColour" property="productColour" jdbcType="VARCHAR" />
+    <result column="productStandardID" property="productStandardID" jdbcType="INTEGER" />
+    <result column="productStandard" property="productStandard" jdbcType="VARCHAR" />
+    <result column="productTitleImage" property="productTitleImage" jdbcType="VARCHAR" />
+    <result column="productUnitPrice" property="productUnitPrice" jdbcType="INTEGER" />
+    <result column="productNumber" property="productNumber" jdbcType="INTEGER" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="orderType" property="orderType" jdbcType="SMALLINT" />
+    <result column="orderFrom" property="orderFrom" jdbcType="SMALLINT" />
+    <result column="userRemark" property="userRemark" jdbcType="VARCHAR" />
+    <result column="totalAmount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="favourMode" property="favourMode" jdbcType="SMALLINT" />
+    <result column="favourRelatedCouponID" property="favourRelatedCouponID" jdbcType="INTEGER" />
+    <result column="favourAmount" property="favourAmount" jdbcType="INTEGER" />
+    <result column="transportationExpenses" property="transportationExpenses" jdbcType="INTEGER" />
+    <result column="finalAmount" property="finalAmount" jdbcType="INTEGER" />
+    <result column="receiverName" property="receiverName" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="receiveAddress" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="phoneNum" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="invoiceTitle" property="invoiceTitle" jdbcType="VARCHAR" />
+    <result column="invoiceContent" property="invoiceContent" jdbcType="VARCHAR" />
+    <result column="orderCreatedTime" property="orderCreatedTime" jdbcType="BIGINT" />
+    <result column="orderPaidTime" property="orderPaidTime" jdbcType="BIGINT" />
+    <result column="lastModified" property="lastModified" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderID, purchaseOrderID, orderPaymentState, orderState, paidMode, paidRecordID,
+    productID, productName, productColourID, productColour, productStandardID, productStandard,
+    productTitleImage, productUnitPrice, productNumber, userID, userName, orderType,
+    orderFrom, userRemark, totalAmount, favourMode, favourRelatedCouponID, favourAmount,
+    transportationExpenses, finalAmount, receiverName, province, city, county, receiveAddress,
+    phoneNum, invoiceTitle, invoiceContent, orderCreatedTime, orderPaidTime, lastModified
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.OrderPurchaseOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_order_purchase_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_order_purchase_order
+    where orderID = #{orderID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_order_purchase_order
+    where orderID = #{orderID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.OrderPurchaseOrderExample" >
+    delete from ylfs_order_purchase_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="orderID" parameterType="com.example.springboot.entity.OrderPurchaseOrder" >
+    insert into ylfs_order_purchase_order (orderID, purchaseOrderID, orderPaymentState,
+      orderState, paidMode, paidRecordID,
+      productID, productName, productColourID,
+      productColour, productStandardID, productStandard,
+      productTitleImage, productUnitPrice, productNumber,
+      userID, userName, orderType,
+      orderFrom, userRemark, totalAmount,
+      favourMode, favourRelatedCouponID, favourAmount,
+      transportationExpenses, finalAmount, receiverName,
+      province, city, county,
+      receiveAddress, phoneNum, invoiceTitle,
+      invoiceContent, orderCreatedTime, orderPaidTime,
+      lastModified)
+    values (#{orderID,jdbcType=INTEGER}, #{purchaseOrderID,jdbcType=VARCHAR}, #{orderPaymentState,jdbcType=SMALLINT},
+      #{orderState,jdbcType=SMALLINT}, #{paidMode,jdbcType=SMALLINT}, #{paidRecordID,jdbcType=INTEGER},
+      #{productID,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productColourID,jdbcType=INTEGER},
+      #{productColour,jdbcType=VARCHAR}, #{productStandardID,jdbcType=INTEGER}, #{productStandard,jdbcType=VARCHAR},
+      #{productTitleImage,jdbcType=VARCHAR}, #{productUnitPrice,jdbcType=INTEGER}, #{productNumber,jdbcType=INTEGER},
+      #{userID,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{orderType,jdbcType=SMALLINT},
+      #{orderFrom,jdbcType=SMALLINT}, #{userRemark,jdbcType=VARCHAR}, #{totalAmount,jdbcType=INTEGER},
+      #{favourMode,jdbcType=SMALLINT}, #{favourRelatedCouponID,jdbcType=INTEGER}, #{favourAmount,jdbcType=INTEGER},
+      #{transportationExpenses,jdbcType=INTEGER}, #{finalAmount,jdbcType=INTEGER}, #{receiverName,jdbcType=VARCHAR},
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR},
+      #{receiveAddress,jdbcType=VARCHAR}, #{phoneNum,jdbcType=VARCHAR}, #{invoiceTitle,jdbcType=VARCHAR},
+      #{invoiceContent,jdbcType=VARCHAR}, #{orderCreatedTime,jdbcType=BIGINT}, #{orderPaidTime,jdbcType=BIGINT},
+      #{lastModified,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.OrderPurchaseOrder" >
+    insert into ylfs_order_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderID != null" >
+        orderID,
+      </if>
+      <if test="purchaseOrderID != null" >
+        purchaseOrderID,
+      </if>
+      <if test="orderPaymentState != null" >
+        orderPaymentState,
+      </if>
+      <if test="orderState != null" >
+        orderState,
+      </if>
+      <if test="paidMode != null" >
+        paidMode,
+      </if>
+      <if test="paidRecordID != null" >
+        paidRecordID,
+      </if>
+      <if test="productID != null" >
+        productID,
+      </if>
+      <if test="productName != null" >
+        productName,
+      </if>
+      <if test="productColourID != null" >
+        productColourID,
+      </if>
+      <if test="productColour != null" >
+        productColour,
+      </if>
+      <if test="productStandardID != null" >
+        productStandardID,
+      </if>
+      <if test="productStandard != null" >
+        productStandard,
+      </if>
+      <if test="productTitleImage != null" >
+        productTitleImage,
+      </if>
+      <if test="productUnitPrice != null" >
+        productUnitPrice,
+      </if>
+      <if test="productNumber != null" >
+        productNumber,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="orderType != null" >
+        orderType,
+      </if>
+      <if test="orderFrom != null" >
+        orderFrom,
+      </if>
+      <if test="userRemark != null" >
+        userRemark,
+      </if>
+      <if test="totalAmount != null" >
+        totalAmount,
+      </if>
+      <if test="favourMode != null" >
+        favourMode,
+      </if>
+      <if test="favourRelatedCouponID != null" >
+        favourRelatedCouponID,
+      </if>
+      <if test="favourAmount != null" >
+        favourAmount,
+      </if>
+      <if test="transportationExpenses != null" >
+        transportationExpenses,
+      </if>
+      <if test="finalAmount != null" >
+        finalAmount,
+      </if>
+      <if test="receiverName != null" >
+        receiverName,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="receiveAddress != null" >
+        receiveAddress,
+      </if>
+      <if test="phoneNum != null" >
+        phoneNum,
+      </if>
+      <if test="invoiceTitle != null" >
+        invoiceTitle,
+      </if>
+      <if test="invoiceContent != null" >
+        invoiceContent,
+      </if>
+      <if test="orderCreatedTime != null" >
+        orderCreatedTime,
+      </if>
+      <if test="orderPaidTime != null" >
+        orderPaidTime,
+      </if>
+      <if test="lastModified != null" >
+        lastModified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderID != null" >
+        #{orderID,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseOrderID != null" >
+        #{purchaseOrderID,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPaymentState != null" >
+        #{orderPaymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=SMALLINT},
+      </if>
+      <if test="paidMode != null" >
+        #{paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="paidRecordID != null" >
+        #{paidRecordID,jdbcType=INTEGER},
+      </if>
+      <if test="productID != null" >
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productColourID != null" >
+        #{productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="productColour != null" >
+        #{productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="productStandardID != null" >
+        #{productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="productStandard != null" >
+        #{productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitleImage != null" >
+        #{productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnitPrice != null" >
+        #{productUnitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="productNumber != null" >
+        #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderFrom != null" >
+        #{orderFrom,jdbcType=SMALLINT},
+      </if>
+      <if test="userRemark != null" >
+        #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="favourMode != null" >
+        #{favourMode,jdbcType=SMALLINT},
+      </if>
+      <if test="favourRelatedCouponID != null" >
+        #{favourRelatedCouponID,jdbcType=INTEGER},
+      </if>
+      <if test="favourAmount != null" >
+        #{favourAmount,jdbcType=INTEGER},
+      </if>
+      <if test="transportationExpenses != null" >
+        #{transportationExpenses,jdbcType=INTEGER},
+      </if>
+      <if test="finalAmount != null" >
+        #{finalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatedTime != null" >
+        #{orderCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="orderPaidTime != null" >
+        #{orderPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null" >
+        #{lastModified,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.OrderPurchaseOrderExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_order_purchase_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_order_purchase_order
+    <set >
+      <if test="record.orderID != null" >
+        orderID = #{record.orderID,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseOrderID != null" >
+        purchaseOrderID = #{record.purchaseOrderID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderPaymentState != null" >
+        orderPaymentState = #{record.orderPaymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.orderState != null" >
+        orderState = #{record.orderState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.paidMode != null" >
+        paidMode = #{record.paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.paidRecordID != null" >
+        paidRecordID = #{record.paidRecordID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productID != null" >
+        productID = #{record.productID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null" >
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productColourID != null" >
+        productColourID = #{record.productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productColour != null" >
+        productColour = #{record.productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productStandardID != null" >
+        productStandardID = #{record.productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productStandard != null" >
+        productStandard = #{record.productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTitleImage != null" >
+        productTitleImage = #{record.productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productUnitPrice != null" >
+        productUnitPrice = #{record.productUnitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.productNumber != null" >
+        productNumber = #{record.productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderType != null" >
+        orderType = #{record.orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.orderFrom != null" >
+        orderFrom = #{record.orderFrom,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userRemark != null" >
+        userRemark = #{record.userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalAmount != null" >
+        totalAmount = #{record.totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.favourMode != null" >
+        favourMode = #{record.favourMode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.favourRelatedCouponID != null" >
+        favourRelatedCouponID = #{record.favourRelatedCouponID,jdbcType=INTEGER},
+      </if>
+      <if test="record.favourAmount != null" >
+        favourAmount = #{record.favourAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.transportationExpenses != null" >
+        transportationExpenses = #{record.transportationExpenses,jdbcType=INTEGER},
+      </if>
+      <if test="record.finalAmount != null" >
+        finalAmount = #{record.finalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiverName != null" >
+        receiverName = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.county != null" >
+        county = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveAddress != null" >
+        receiveAddress = #{record.receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNum != null" >
+        phoneNum = #{record.phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceTitle != null" >
+        invoiceTitle = #{record.invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceContent != null" >
+        invoiceContent = #{record.invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCreatedTime != null" >
+        orderCreatedTime = #{record.orderCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderPaidTime != null" >
+        orderPaidTime = #{record.orderPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModified != null" >
+        lastModified = #{record.lastModified,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_order_purchase_order
+    set orderID = #{record.orderID,jdbcType=INTEGER},
+    purchaseOrderID = #{record.purchaseOrderID,jdbcType=VARCHAR},
+    orderPaymentState = #{record.orderPaymentState,jdbcType=SMALLINT},
+    orderState = #{record.orderState,jdbcType=SMALLINT},
+    paidMode = #{record.paidMode,jdbcType=SMALLINT},
+    paidRecordID = #{record.paidRecordID,jdbcType=INTEGER},
+    productID = #{record.productID,jdbcType=INTEGER},
+    productName = #{record.productName,jdbcType=VARCHAR},
+    productColourID = #{record.productColourID,jdbcType=INTEGER},
+    productColour = #{record.productColour,jdbcType=VARCHAR},
+    productStandardID = #{record.productStandardID,jdbcType=INTEGER},
+    productStandard = #{record.productStandard,jdbcType=VARCHAR},
+    productTitleImage = #{record.productTitleImage,jdbcType=VARCHAR},
+    productUnitPrice = #{record.productUnitPrice,jdbcType=INTEGER},
+    productNumber = #{record.productNumber,jdbcType=INTEGER},
+    userID = #{record.userID,jdbcType=VARCHAR},
+    userName = #{record.userName,jdbcType=VARCHAR},
+    orderType = #{record.orderType,jdbcType=SMALLINT},
+    orderFrom = #{record.orderFrom,jdbcType=SMALLINT},
+    userRemark = #{record.userRemark,jdbcType=VARCHAR},
+    totalAmount = #{record.totalAmount,jdbcType=INTEGER},
+    favourMode = #{record.favourMode,jdbcType=SMALLINT},
+    favourRelatedCouponID = #{record.favourRelatedCouponID,jdbcType=INTEGER},
+    favourAmount = #{record.favourAmount,jdbcType=INTEGER},
+    transportationExpenses = #{record.transportationExpenses,jdbcType=INTEGER},
+    finalAmount = #{record.finalAmount,jdbcType=INTEGER},
+    receiverName = #{record.receiverName,jdbcType=VARCHAR},
+    province = #{record.province,jdbcType=VARCHAR},
+    city = #{record.city,jdbcType=VARCHAR},
+    county = #{record.county,jdbcType=VARCHAR},
+    receiveAddress = #{record.receiveAddress,jdbcType=VARCHAR},
+    phoneNum = #{record.phoneNum,jdbcType=VARCHAR},
+    invoiceTitle = #{record.invoiceTitle,jdbcType=VARCHAR},
+    invoiceContent = #{record.invoiceContent,jdbcType=VARCHAR},
+    orderCreatedTime = #{record.orderCreatedTime,jdbcType=BIGINT},
+    orderPaidTime = #{record.orderPaidTime,jdbcType=BIGINT},
+    lastModified = #{record.lastModified,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.OrderPurchaseOrder" >
+    update ylfs_order_purchase_order
+    <set >
+      <if test="purchaseOrderID != null" >
+        purchaseOrderID = #{purchaseOrderID,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPaymentState != null" >
+        orderPaymentState = #{orderPaymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="orderState != null" >
+        orderState = #{orderState,jdbcType=SMALLINT},
+      </if>
+      <if test="paidMode != null" >
+        paidMode = #{paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="paidRecordID != null" >
+        paidRecordID = #{paidRecordID,jdbcType=INTEGER},
+      </if>
+      <if test="productID != null" >
+        productID = #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productColourID != null" >
+        productColourID = #{productColourID,jdbcType=INTEGER},
+      </if>
+      <if test="productColour != null" >
+        productColour = #{productColour,jdbcType=VARCHAR},
+      </if>
+      <if test="productStandardID != null" >
+        productStandardID = #{productStandardID,jdbcType=INTEGER},
+      </if>
+      <if test="productStandard != null" >
+        productStandard = #{productStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitleImage != null" >
+        productTitleImage = #{productTitleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnitPrice != null" >
+        productUnitPrice = #{productUnitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="productNumber != null" >
+        productNumber = #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        orderType = #{orderType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderFrom != null" >
+        orderFrom = #{orderFrom,jdbcType=SMALLINT},
+      </if>
+      <if test="userRemark != null" >
+        userRemark = #{userRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        totalAmount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="favourMode != null" >
+        favourMode = #{favourMode,jdbcType=SMALLINT},
+      </if>
+      <if test="favourRelatedCouponID != null" >
+        favourRelatedCouponID = #{favourRelatedCouponID,jdbcType=INTEGER},
+      </if>
+      <if test="favourAmount != null" >
+        favourAmount = #{favourAmount,jdbcType=INTEGER},
+      </if>
+      <if test="transportationExpenses != null" >
+        transportationExpenses = #{transportationExpenses,jdbcType=INTEGER},
+      </if>
+      <if test="finalAmount != null" >
+        finalAmount = #{finalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="receiverName != null" >
+        receiverName = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        receiveAddress = #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        invoiceTitle = #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceContent != null" >
+        invoiceContent = #{invoiceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreatedTime != null" >
+        orderCreatedTime = #{orderCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="orderPaidTime != null" >
+        orderPaidTime = #{orderPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null" >
+        lastModified = #{lastModified,jdbcType=BIGINT},
+      </if>
+    </set>
+    where orderID = #{orderID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.OrderPurchaseOrder" >
+    update ylfs_order_purchase_order
+    set purchaseOrderID = #{purchaseOrderID,jdbcType=VARCHAR},
+      orderPaymentState = #{orderPaymentState,jdbcType=SMALLINT},
+      orderState = #{orderState,jdbcType=SMALLINT},
+      paidMode = #{paidMode,jdbcType=SMALLINT},
+      paidRecordID = #{paidRecordID,jdbcType=INTEGER},
+      productID = #{productID,jdbcType=INTEGER},
+      productName = #{productName,jdbcType=VARCHAR},
+      productColourID = #{productColourID,jdbcType=INTEGER},
+      productColour = #{productColour,jdbcType=VARCHAR},
+      productStandardID = #{productStandardID,jdbcType=INTEGER},
+      productStandard = #{productStandard,jdbcType=VARCHAR},
+      productTitleImage = #{productTitleImage,jdbcType=VARCHAR},
+      productUnitPrice = #{productUnitPrice,jdbcType=INTEGER},
+      productNumber = #{productNumber,jdbcType=INTEGER},
+      userID = #{userID,jdbcType=VARCHAR},
+      userName = #{userName,jdbcType=VARCHAR},
+      orderType = #{orderType,jdbcType=SMALLINT},
+      orderFrom = #{orderFrom,jdbcType=SMALLINT},
+      userRemark = #{userRemark,jdbcType=VARCHAR},
+      totalAmount = #{totalAmount,jdbcType=INTEGER},
+      favourMode = #{favourMode,jdbcType=SMALLINT},
+      favourRelatedCouponID = #{favourRelatedCouponID,jdbcType=INTEGER},
+      favourAmount = #{favourAmount,jdbcType=INTEGER},
+      transportationExpenses = #{transportationExpenses,jdbcType=INTEGER},
+      finalAmount = #{finalAmount,jdbcType=INTEGER},
+      receiverName = #{receiverName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      county = #{county,jdbcType=VARCHAR},
+      receiveAddress = #{receiveAddress,jdbcType=VARCHAR},
+      phoneNum = #{phoneNum,jdbcType=VARCHAR},
+      invoiceTitle = #{invoiceTitle,jdbcType=VARCHAR},
+      invoiceContent = #{invoiceContent,jdbcType=VARCHAR},
+      orderCreatedTime = #{orderCreatedTime,jdbcType=BIGINT},
+      orderPaidTime = #{orderPaidTime,jdbcType=BIGINT},
+      lastModified = #{lastModified,jdbcType=BIGINT}
+    where orderID = #{orderID,jdbcType=INTEGER}
+  </update>
+</mapper>

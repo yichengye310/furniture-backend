@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.ProductLimitedTimeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.ProductLimitedTime" >
+    <id column="limitedTimeProductID" property="limitedTimeProductID" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="startTime" property="startTime" jdbcType="BIGINT" />
+    <result column="endTime" property="endTime" jdbcType="BIGINT" />
+    <result column="productCode" property="productCode" jdbcType="VARCHAR" />
+    <result column="styleID" property="styleID" jdbcType="INTEGER" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="productDescription" property="productDescription" jdbcType="VARCHAR" />
+    <result column="activityImg" property="activityImg" jdbcType="VARCHAR" />
+    <result column="activityVideo" property="activityVideo" jdbcType="VARCHAR" />
+    <result column="alreadyRobbedNum" property="alreadyRobbedNum" jdbcType="INTEGER" />
+    <result column="limitNum" property="limitNum" jdbcType="INTEGER" />
+    <result column="personLimitNum" property="personLimitNum" jdbcType="INTEGER" />
+    <result column="browseNum" property="browseNum" jdbcType="INTEGER" />
+    <result column="discountWay" property="discountWay" jdbcType="SMALLINT" />
+    <result column="full" property="full" jdbcType="INTEGER" />
+    <result column="reduce" property="reduce" jdbcType="INTEGER" />
+    <result column="activeObject" property="activeObject" jdbcType="SMALLINT" />
+    <result column="createdTimestamp" property="createdTimestamp" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="DTOBaseResultMap" type="com.example.springboot.dto.ProductLimitedTimeDTO" >
+    <id column="limitedTimeProductID" property="limitedTimeProductID" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="startTime" property="startTime" jdbcType="BIGINT" />
+    <result column="endTime" property="endTime" jdbcType="BIGINT" />
+    <result column="productCode" property="productCode" jdbcType="VARCHAR" />
+    <result column="styleID" property="styleID" jdbcType="INTEGER" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="productDescription" property="productDescription" jdbcType="VARCHAR" />
+    <result column="activityImg" property="activityImg" jdbcType="VARCHAR" />
+    <result column="activityVideo" property="activityVideo" jdbcType="VARCHAR" />
+    <result column="alreadyRobbedNum" property="alreadyRobbedNum" jdbcType="INTEGER" />
+    <result column="limitNum" property="limitNum" jdbcType="INTEGER" />
+    <result column="personLimitNum" property="personLimitNum" jdbcType="INTEGER" />
+    <result column="browseNum" property="browseNum" jdbcType="INTEGER" />
+    <result column="discountWay" property="discountWay" jdbcType="SMALLINT" />
+    <result column="full" property="full" jdbcType="INTEGER" />
+    <result column="reduce" property="reduce" jdbcType="INTEGER" />
+    <result column="activeObject" property="activeObject" jdbcType="BIGINT" />
+    <result column="createdTimestamp" property="createdTimestamp" jdbcType="BIGINT" />
+    <association property="productLimitedTimeDetail" javaType="com.example.springboot.entity.ProductLimitedTimeDetail" column="limitedTimeProductID" select="com.example.springboot.mapper.ProductLimitedTimeDetailMapper.selectByPrimaryKey" />
+    <collection property="commonImage" ofType="com.example.springboot.entity.CommonImage" column="{relationID=limitedTimeProductID}" select="com.example.springboot.mapper.CommonImageMapper.selectProductLimitedTimeTitleImgByRelationID" />
+    <collection property="productLimitedTimeStandardsDTOS" ofType="com.example.springboot.dto.ProductLimitedTimeStandardsDTO" column="{bandProductID=limitedTimeProductID}" select="com.example.springboot.mapper.ProductLimitedTimeStandardsMapper.selectByBandProductLimitedTimeID" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    limitedTimeProductID, status, startTime, endTime, productCode,
+    styleID, productName, productDescription, activityImg, activityVideo, alreadyRobbedNum, limitNum, personLimitNum,
+    browseNum, discountWay, full, reduce, activeObject,createdTimestamp
+  </sql>
+  <sql id="selectListSql">
+    SELECT
+    p.*
+    FROM ylfs_product_limited_time p
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+<!--    <if test="productCode != null">-->
+<!--      AND productCode LIKE CONCAT('%', CONCAT( #{productCode}, '%'))-->
+<!--    </if>-->
+<!--    <if test="styleID != null">-->
+<!--      AND styleID = #{styleID}-->
+<!--    </if>-->
+<!--    <if test="productName != null">-->
+<!--      AND productName LIKE CONCAT('%', CONCAT( #{productName}, '%'))-->
+<!--    </if>-->
+<!--    <if test="productDescription != null">-->
+<!--      AND productDescription LIKE CONCAT('%', CONCAT( #{productDescription}, '%'))-->
+<!--    </if>-->
+<!--    <if test="discountWay != null">-->
+<!--      AND discountWay = #{discountWay}-->
+<!--    </if>-->
+<!--    <if test="activeObject != null">-->
+<!--      AND activeObject = #{activeObject}-->
+<!--    </if>-->
+    <if test="type ==null">
+      AND startTime <![CDATA[ <= ]]> unix_timestamp(now())
+      AND endTime <![CDATA[ >= ]]> unix_timestamp(now())
+      AND status =1
+    </if>
+
+
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.ProductLimitedTimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_product_limited_time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="DTOBaseResultMap" parameterType="java.lang.Integer" >
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    where limitedTimeProductID = #{limitedTimeProductID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_product_limited_time
+    where limitedTimeProductID = #{limitedTimeProductID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.ProductLimitedTimeExample" >
+    delete from ylfs_product_limited_time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.ProductLimitedTime" >
+    insert into ylfs_product_limited_time (limitedTimeProductID, status, startTime, 
+      endTime, productCode, styleID, productName,
+      productDescription, activityImg, activityVideo, alreadyRobbedNum,
+      limitNum, personLimitNum,browseNum, discountWay,
+      full, reduce, activeObject,createdTimestamp
+      )
+    values (#{limitedTimeProductID,jdbcType=INTEGER}, #{status,jdbcType=SMALLINT}, #{startTime,jdbcType=BIGINT}, 
+      #{endTime,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, #{styleID,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR},
+      #{productDescription,jdbcType=VARCHAR}, #{activityImg,jdbcType=VARCHAR},#{activityVideo,jdbcType=VARCHAR}, #{alreadyRobbedNum,jdbcType=INTEGER},
+      #{limitNum,jdbcType=INTEGER},#{personLimitNum,jdbcType=INTEGER}, #{browseNum,jdbcType=INTEGER}, #{discountWay,jdbcType=SMALLINT},
+      #{full,jdbcType=INTEGER}, #{reduce,jdbcType=INTEGER}, #{activeObject,jdbcType=SMALLINT}, #{createdTimestamp,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="limitedTimeProductID" parameterType="com.example.springboot.entity.ProductLimitedTime" >
+    insert into ylfs_product_limited_time
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="limitedTimeProductID != null" >
+        limitedTimeProductID,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="startTime != null" >
+        startTime,
+      </if>
+      <if test="endTime != null" >
+        endTime,
+      </if>
+      <if test="productCode != null" >
+        productCode,
+      </if>
+      <if test="styleID != null" >
+        styleID,
+      </if>
+      <if test="productName != null" >
+        productName,
+      </if>
+      <if test="productDescription != null" >
+        productDescription,
+      </if>
+      <if test="activityImg != null" >
+        activityImg,
+      </if>
+      <if test="activityVideo != null" >
+        activityVideo,
+      </if>
+      <if test="alreadyRobbedNum != null" >
+        alreadyRobbedNum,
+      </if>
+      <if test="limitNum != null" >
+        limitNum,
+      </if>
+      <if test="personLimitNum != null" >
+        personLimitNum,
+      </if>
+      <if test="browseNum != null" >
+        browseNum,
+      </if>
+      <if test="discountWay != null" >
+        discountWay,
+      </if>
+      <if test="full != null" >
+        full,
+      </if>
+      <if test="reduce != null" >
+        reduce,
+      </if>
+      <if test="activeObject != null" >
+        activeObject,
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="limitedTimeProductID != null" >
+        #{limitedTimeProductID,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="styleID != null" >
+        #{styleID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null" >
+        #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="activityImg != null" >
+        #{activityImg,jdbcType=VARCHAR},
+      </if>
+      <if test="activityVideo != null" >
+        #{activityVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="alreadyRobbedNum != null" >
+        #{alreadyRobbedNum,jdbcType=INTEGER},
+      </if>
+      <if test="limitNum != null" >
+        #{limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="personLimitNum != null" >
+        #{personLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="browseNum != null" >
+        #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="discountWay != null" >
+        #{discountWay,jdbcType=SMALLINT},
+      </if>
+      <if test="full != null" >
+        #{full,jdbcType=INTEGER},
+      </if>
+      <if test="reduce != null" >
+        #{reduce,jdbcType=INTEGER},
+      </if>
+      <if test="activeObject != null" >
+        #{activeObject,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null" >
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.ProductLimitedTimeExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_product_limited_time
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_product_limited_time
+    <set >
+      <if test="record.limitedTimeProductID != null" >
+        limitedTimeProductID = #{record.limitedTimeProductID,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.startTime != null" >
+        startTime = #{record.startTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.endTime != null" >
+        endTime = #{record.endTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.productCode != null" >
+        productCode = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.styleID != null" >
+        styleID = #{record.styleID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null" >
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDescription != null" >
+        productDescription = #{record.productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityImg != null" >
+        activityImg = #{record.activityImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityVideo != null" >
+        activityVideo = #{record.activityVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alreadyRobbedNum != null" >
+        alreadyRobbedNum = #{record.alreadyRobbedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitNum != null" >
+        limitNum = #{record.limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.personLimitNum != null" >
+        personLimitNum = #{record.personLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.browseNum != null" >
+        browseNum = #{record.browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountWay != null" >
+        discountWay = #{record.discountWay,jdbcType=SMALLINT},
+      </if>
+      <if test="record.full != null" >
+        full = #{record.full,jdbcType=INTEGER},
+      </if>
+      <if test="record.reduce != null" >
+        reduce = #{record.reduce,jdbcType=INTEGER},
+      </if>
+      <if test="record.activeObject != null" >
+        activeObject = #{record.activeObject,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createdTimestamp != null" >
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_product_limited_time
+    set limitedTimeProductID = #{record.limitedTimeProductID,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=SMALLINT},
+      startTime = #{record.startTime,jdbcType=BIGINT},
+      endTime = #{record.endTime,jdbcType=BIGINT},
+      productCode = #{record.productCode,jdbcType=VARCHAR},
+      styleID = #{record.styleID,jdbcType=INTEGER},
+      productName = #{record.productName,jdbcType=VARCHAR},
+      productDescription = #{record.productDescription,jdbcType=VARCHAR},
+      activityImg = #{record.activityImg,jdbcType=VARCHAR},
+      activityVideo = #{record.activityVideo,jdbcType=VARCHAR},
+      alreadyRobbedNum = #{record.alreadyRobbedNum,jdbcType=INTEGER},
+      limitNum = #{record.limitNum,jdbcType=INTEGER},
+      personLimitNum = #{record.personLimitNum,jdbcType=INTEGER},
+      browseNum = #{record.browseNum,jdbcType=INTEGER},
+      discountWay = #{record.discountWay,jdbcType=SMALLINT},
+      full = #{record.full,jdbcType=INTEGER},
+      reduce = #{record.reduce,jdbcType=INTEGER},
+      activeObject = #{record.activeObject,jdbcType=SMALLINT},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.ProductLimitedTime" >
+    update ylfs_product_limited_time
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="startTime != null" >
+        startTime = #{startTime,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null" >
+        endTime = #{endTime,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="styleID != null" >
+        styleID = #{styleID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null" >
+        productDescription = #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="activityImg != null" >
+        activityImg = #{activityImg,jdbcType=VARCHAR},
+      </if>
+      <if test="activityVideo != null" >
+        activityVideo = #{activityVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="alreadyRobbedNum != null" >
+        alreadyRobbedNum = #{alreadyRobbedNum,jdbcType=INTEGER},
+      </if>
+      <if test="limitNum != null" >
+        limitNum = #{limitNum,jdbcType=INTEGER},
+      </if>
+      <if test="personLimitNum != null" >
+        personLimitNum = #{personLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="browseNum != null" >
+        browseNum = #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="discountWay != null" >
+        discountWay = #{discountWay,jdbcType=SMALLINT},
+      </if>
+      <if test="full != null" >
+        full = #{full,jdbcType=INTEGER},
+      </if>
+      <if test="reduce != null" >
+        reduce = #{reduce,jdbcType=INTEGER},
+      </if>
+      <if test="activeObject != null" >
+        activeObject = #{activeObject,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where limitedTimeProductID = #{limitedTimeProductID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.ProductLimitedTime" >
+    update ylfs_product_limited_time
+    set status = #{status,jdbcType=SMALLINT},
+      startTime = #{startTime,jdbcType=BIGINT},
+      endTime = #{endTime,jdbcType=BIGINT},
+      productCode = #{productCode,jdbcType=VARCHAR},
+      styleID = #{styleID,jdbcType=INTEGER},
+      productName = #{productName,jdbcType=VARCHAR},
+      productDescription = #{productDescription,jdbcType=VARCHAR},
+      activityImg = #{activityImg,jdbcType=VARCHAR},
+      activityVideo = #{activityVideo,jdbcType=VARCHAR},
+      alreadyRobbedNum = #{alreadyRobbedNum,jdbcType=INTEGER},
+      limitNum = #{limitNum,jdbcType=INTEGER},
+      personLimitNum = #{personLimitNum,jdbcType=INTEGER},
+      browseNum = #{browseNum,jdbcType=INTEGER},
+      discountWay = #{discountWay,jdbcType=SMALLINT},
+      full = #{full,jdbcType=INTEGER},
+      reduce = #{reduce,jdbcType=INTEGER},
+      activeObject = #{activeObject,jdbcType=SMALLINT},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT}
+    where limitedTimeProductID = #{limitedTimeProductID,jdbcType=INTEGER}
+  </update>
+  <select id="productLimitedTimeListByPage" resultMap="DTOBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    <include refid="whereSql"></include>
+  </select>
+  <update id="updateAlreadyRobbedNum" parameterType="java.lang.Integer">
+    update ylfs_product_limited_time
+    set alreadyRobbedNum = alreadyRobbedNum+1
+    where limitedTimeProductID = #{limitedTimeProductID,jdbcType=INTEGER}
+  </update>
+  <select id="selectByProductIDs" parameterType="java.util.List" resultMap="DTOBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    where startTime <![CDATA[ <= ]]> unix_timestamp(now())
+    AND endTime <![CDATA[ >= ]]> unix_timestamp(now())
+    AND limitedTimeProductID IN <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+  </select>
+</mapper>

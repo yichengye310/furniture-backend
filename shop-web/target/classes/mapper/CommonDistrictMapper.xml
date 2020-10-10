@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CommonDistrictMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.CommonDistrict">
+    <id column="locationDistrictID" jdbcType="INTEGER" property="locationDistrictID" />
+    <result column="cityID" jdbcType="INTEGER" property="cityID" />
+    <result column="districtName" jdbcType="VARCHAR" property="districtName" />
+    <result column="spell" jdbcType="VARCHAR" property="spell" />
+    <result column="orderNo" jdbcType="INTEGER" property="orderNo" />
+    <result column="state" jdbcType="SMALLINT" property="state" />
+    <result column="createdTimestamp" jdbcType="BIGINT" property="createdTimestamp" />
+    <result column="creatorID" jdbcType="BIGINT" property="creatorID" />
+    <result column="creatorName" jdbcType="VARCHAR" property="creatorName" />
+    <result column="lastModified" jdbcType="BIGINT" property="lastModified" />
+    <result column="lastModifierID" jdbcType="BIGINT" property="lastModifierID" />
+    <result column="lastModifierName" jdbcType="VARCHAR" property="lastModifierName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    locationDistrictID, cityID, districtName, spell, orderNo, state, createdTimestamp, 
+    creatorID, creatorName, lastModified, lastModifierID, lastModifierName
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.CommonDistrictExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_common_district
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_common_district
+    where locationDistrictID = #{locationDistrictID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_common_district
+    where locationDistrictID = #{locationDistrictID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.CommonDistrictExample">
+    delete from ylfs_common_district
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.CommonDistrict">
+    insert into ylfs_common_district (locationDistrictID, cityID, districtName, 
+      spell, orderNo, state, 
+      createdTimestamp, creatorID, creatorName, 
+      lastModified, lastModifierID, lastModifierName
+      )
+    values (#{locationDistrictID,jdbcType=INTEGER}, #{cityID,jdbcType=INTEGER}, #{districtName,jdbcType=VARCHAR}, 
+      #{spell,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, #{state,jdbcType=SMALLINT}, 
+      #{createdTimestamp,jdbcType=BIGINT}, #{creatorID,jdbcType=BIGINT}, #{creatorName,jdbcType=VARCHAR}, 
+      #{lastModified,jdbcType=BIGINT}, #{lastModifierID,jdbcType=BIGINT}, #{lastModifierName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.CommonDistrict">
+    insert into ylfs_common_district
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="locationDistrictID != null">
+        locationDistrictID,
+      </if>
+      <if test="cityID != null">
+        cityID,
+      </if>
+      <if test="districtName != null">
+        districtName,
+      </if>
+      <if test="spell != null">
+        spell,
+      </if>
+      <if test="orderNo != null">
+        orderNo,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp,
+      </if>
+      <if test="creatorID != null">
+        creatorID,
+      </if>
+      <if test="creatorName != null">
+        creatorName,
+      </if>
+      <if test="lastModified != null">
+        lastModified,
+      </if>
+      <if test="lastModifierID != null">
+        lastModifierID,
+      </if>
+      <if test="lastModifierName != null">
+        lastModifierName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="locationDistrictID != null">
+        #{locationDistrictID,jdbcType=INTEGER},
+      </if>
+      <if test="cityID != null">
+        #{cityID,jdbcType=INTEGER},
+      </if>
+      <if test="districtName != null">
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null">
+        #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="creatorID != null">
+        #{creatorID,jdbcType=BIGINT},
+      </if>
+      <if test="creatorName != null">
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModified != null">
+        #{lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierID != null">
+        #{lastModifierID,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierName != null">
+        #{lastModifierName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.CommonDistrictExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_common_district
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_common_district
+    <set>
+      <if test="record.locationDistrictID != null">
+        locationDistrictID = #{record.locationDistrictID,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityID != null">
+        cityID = #{record.cityID,jdbcType=INTEGER},
+      </if>
+      <if test="record.districtName != null">
+        districtName = #{record.districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spell != null">
+        spell = #{record.spell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null">
+        orderNo = #{record.orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createdTimestamp != null">
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorID != null">
+        creatorID = #{record.creatorID,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorName != null">
+        creatorName = #{record.creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastModified != null">
+        lastModified = #{record.lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifierID != null">
+        lastModifierID = #{record.lastModifierID,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifierName != null">
+        lastModifierName = #{record.lastModifierName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_common_district
+    set locationDistrictID = #{record.locationDistrictID,jdbcType=INTEGER},
+      cityID = #{record.cityID,jdbcType=INTEGER},
+      districtName = #{record.districtName,jdbcType=VARCHAR},
+      spell = #{record.spell,jdbcType=VARCHAR},
+      orderNo = #{record.orderNo,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=SMALLINT},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      creatorID = #{record.creatorID,jdbcType=BIGINT},
+      creatorName = #{record.creatorName,jdbcType=VARCHAR},
+      lastModified = #{record.lastModified,jdbcType=BIGINT},
+      lastModifierID = #{record.lastModifierID,jdbcType=BIGINT},
+      lastModifierName = #{record.lastModifierName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.CommonDistrict">
+    update ylfs_common_district
+    <set>
+      <if test="cityID != null">
+        cityID = #{cityID,jdbcType=INTEGER},
+      </if>
+      <if test="districtName != null">
+        districtName = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null">
+        spell = #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        orderNo = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="creatorID != null">
+        creatorID = #{creatorID,jdbcType=BIGINT},
+      </if>
+      <if test="creatorName != null">
+        creatorName = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModified != null">
+        lastModified = #{lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierID != null">
+        lastModifierID = #{lastModifierID,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierName != null">
+        lastModifierName = #{lastModifierName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where locationDistrictID = #{locationDistrictID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.CommonDistrict">
+    update ylfs_common_district
+    set cityID = #{cityID,jdbcType=INTEGER},
+      districtName = #{districtName,jdbcType=VARCHAR},
+      spell = #{spell,jdbcType=VARCHAR},
+      orderNo = #{orderNo,jdbcType=INTEGER},
+      state = #{state,jdbcType=SMALLINT},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      creatorID = #{creatorID,jdbcType=BIGINT},
+      creatorName = #{creatorName,jdbcType=VARCHAR},
+      lastModified = #{lastModified,jdbcType=BIGINT},
+      lastModifierID = #{lastModifierID,jdbcType=BIGINT},
+      lastModifierName = #{lastModifierName,jdbcType=VARCHAR}
+    where locationDistrictID = #{locationDistrictID,jdbcType=INTEGER}
+  </update>
+</mapper>

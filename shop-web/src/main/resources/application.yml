@@ -1,0 +1,34 @@
+#端口配置
+server:
+  port: 8084
+#数据库配置
+spring:
+#解决connection不够用问题
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 150
+  #springboot限制上传文件大小
+  servlet:
+    multipart:
+      #如果不限制大小，则设置为-1即可
+#      maxFileSize: -1
+#      maxRequestSize: -1
+      maxFileSize: 5MB
+      maxRequestSize: 50MB
+#默认激活开发配置
+  profiles:
+#    active: dev  #本地开发环境
+    active: pro   #服务器开发环境
+#showSql 控制台打印sql日志
+logging:
+  level:
+    com:
+      example:
+        springboot:
+          mapper : debug
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.example.springboot.entity  # 注意：对应实体类的路径
+  config-location: classpath:mybatis/MybatisConfig.xml #注意:分页查询对应的配置文件路径

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.UserCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.UserCoupon" >
+    <id column="userCouponID" property="userCouponID" jdbcType="INTEGER" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="couponName" property="couponName" jdbcType="VARCHAR" />
+    <result column="couponDescription" property="couponDescription" jdbcType="VARCHAR" />
+    <result column="userCouponState" property="userCouponState" jdbcType="INTEGER" />
+    <result column="couponType" property="couponType" jdbcType="INTEGER" />
+    <result column="couponInnerSeq" property="couponInnerSeq" jdbcType="VARCHAR" />
+    <result column="discountType" property="discountType" jdbcType="INTEGER" />
+    <result column="couponAmount" property="couponAmount" jdbcType="INTEGER" />
+    <result column="discountLimit" property="discountLimit" jdbcType="INTEGER" />
+    <result column="couponBeginTime" property="couponBeginTime" jdbcType="BIGINT" />
+    <result column="couponEndTime" property="couponEndTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userCouponID, userID, couponName, couponDescription, userCouponState, couponType, 
+    couponInnerSeq, discountType, couponAmount, discountLimit, couponBeginTime, couponEndTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.UserCouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_user_coupon
+    where userCouponID = #{userCouponID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_user_coupon
+    where userCouponID = #{userCouponID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.UserCouponExample" >
+    delete from ylfs_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.UserCoupon" >
+    insert into ylfs_user_coupon (userCouponID, userID, couponName, 
+      couponDescription, userCouponState, couponType, 
+      couponInnerSeq, discountType, couponAmount, 
+      discountLimit, couponBeginTime, couponEndTime
+      )
+    values (#{userCouponID,jdbcType=INTEGER}, #{userID,jdbcType=VARCHAR}, #{couponName,jdbcType=VARCHAR}, 
+      #{couponDescription,jdbcType=VARCHAR}, #{userCouponState,jdbcType=INTEGER}, #{couponType,jdbcType=INTEGER}, 
+      #{couponInnerSeq,jdbcType=VARCHAR}, #{discountType,jdbcType=INTEGER}, #{couponAmount,jdbcType=INTEGER}, 
+      #{discountLimit,jdbcType=INTEGER}, #{couponBeginTime,jdbcType=BIGINT}, #{couponEndTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.UserCoupon" >
+    insert into ylfs_user_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userCouponID != null" >
+        userCouponID,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="couponName != null" >
+        couponName,
+      </if>
+      <if test="couponDescription != null" >
+        couponDescription,
+      </if>
+      <if test="userCouponState != null" >
+        userCouponState,
+      </if>
+      <if test="couponType != null" >
+        couponType,
+      </if>
+      <if test="couponInnerSeq != null" >
+        couponInnerSeq,
+      </if>
+      <if test="discountType != null" >
+        discountType,
+      </if>
+      <if test="couponAmount != null" >
+        couponAmount,
+      </if>
+      <if test="discountLimit != null" >
+        discountLimit,
+      </if>
+      <if test="couponBeginTime != null" >
+        couponBeginTime,
+      </if>
+      <if test="couponEndTime != null" >
+        couponEndTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userCouponID != null" >
+        #{userCouponID,jdbcType=INTEGER},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponDescription != null" >
+        #{couponDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userCouponState != null" >
+        #{userCouponState,jdbcType=INTEGER},
+      </if>
+      <if test="couponType != null" >
+        #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test="couponInnerSeq != null" >
+        #{couponInnerSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="discountType != null" >
+        #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="couponAmount != null" >
+        #{couponAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountLimit != null" >
+        #{discountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="couponBeginTime != null" >
+        #{couponBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="couponEndTime != null" >
+        #{couponEndTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.UserCouponExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_user_coupon
+    <set >
+      <if test="record.userCouponID != null" >
+        userCouponID = #{record.userCouponID,jdbcType=INTEGER},
+      </if>
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponName != null" >
+        couponName = #{record.couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponDescription != null" >
+        couponDescription = #{record.couponDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCouponState != null" >
+        userCouponState = #{record.userCouponState,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponType != null" >
+        couponType = #{record.couponType,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponInnerSeq != null" >
+        couponInnerSeq = #{record.couponInnerSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountType != null" >
+        discountType = #{record.discountType,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponAmount != null" >
+        couponAmount = #{record.couponAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountLimit != null" >
+        discountLimit = #{record.discountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponBeginTime != null" >
+        couponBeginTime = #{record.couponBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponEndTime != null" >
+        couponEndTime = #{record.couponEndTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_user_coupon
+    set userCouponID = #{record.userCouponID,jdbcType=INTEGER},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      couponName = #{record.couponName,jdbcType=VARCHAR},
+      couponDescription = #{record.couponDescription,jdbcType=VARCHAR},
+      userCouponState = #{record.userCouponState,jdbcType=INTEGER},
+      couponType = #{record.couponType,jdbcType=INTEGER},
+      couponInnerSeq = #{record.couponInnerSeq,jdbcType=VARCHAR},
+      discountType = #{record.discountType,jdbcType=INTEGER},
+      couponAmount = #{record.couponAmount,jdbcType=INTEGER},
+      discountLimit = #{record.discountLimit,jdbcType=INTEGER},
+      couponBeginTime = #{record.couponBeginTime,jdbcType=BIGINT},
+      couponEndTime = #{record.couponEndTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.UserCoupon" >
+    update ylfs_user_coupon
+    <set >
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        couponName = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponDescription != null" >
+        couponDescription = #{couponDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userCouponState != null" >
+        userCouponState = #{userCouponState,jdbcType=INTEGER},
+      </if>
+      <if test="couponType != null" >
+        couponType = #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test="couponInnerSeq != null" >
+        couponInnerSeq = #{couponInnerSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="discountType != null" >
+        discountType = #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="couponAmount != null" >
+        couponAmount = #{couponAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountLimit != null" >
+        discountLimit = #{discountLimit,jdbcType=INTEGER},
+      </if>
+      <if test="couponBeginTime != null" >
+        couponBeginTime = #{couponBeginTime,jdbcType=BIGINT},
+      </if>
+      <if test="couponEndTime != null" >
+        couponEndTime = #{couponEndTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where userCouponID = #{userCouponID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.UserCoupon" >
+    update ylfs_user_coupon
+    set userID = #{userID,jdbcType=VARCHAR},
+      couponName = #{couponName,jdbcType=VARCHAR},
+      couponDescription = #{couponDescription,jdbcType=VARCHAR},
+      userCouponState = #{userCouponState,jdbcType=INTEGER},
+      couponType = #{couponType,jdbcType=INTEGER},
+      couponInnerSeq = #{couponInnerSeq,jdbcType=VARCHAR},
+      discountType = #{discountType,jdbcType=INTEGER},
+      couponAmount = #{couponAmount,jdbcType=INTEGER},
+      discountLimit = #{discountLimit,jdbcType=INTEGER},
+      couponBeginTime = #{couponBeginTime,jdbcType=BIGINT},
+      couponEndTime = #{couponEndTime,jdbcType=BIGINT}
+    where userCouponID = #{userCouponID,jdbcType=INTEGER}
+  </update>
+</mapper>

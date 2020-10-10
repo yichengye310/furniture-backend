@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CommonCityMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.CommonCity">
+    <id column="cityID" jdbcType="INTEGER" property="cityID" />
+    <result column="provinceID" jdbcType="INTEGER" property="provinceID" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityName" />
+    <result column="state" jdbcType="SMALLINT" property="state" />
+    <result column="spell" jdbcType="VARCHAR" property="spell" />
+    <result column="orderNo" jdbcType="INTEGER" property="orderNo" />
+    <result column="areaCode" jdbcType="VARCHAR" property="areaCode" />
+    <result column="isHot" jdbcType="SMALLINT" property="isHot" />
+    <result column="createdTimestamp" jdbcType="BIGINT" property="createdTimestamp" />
+    <result column="lastModified" jdbcType="BIGINT" property="lastModified" />
+    <result column="cityCode" jdbcType="VARCHAR" property="cityCode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cityID, provinceID, cityName, state, spell, orderNo, areaCode, isHot, createdTimestamp, 
+    lastModified, cityCode
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.CommonCityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_common_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_common_city
+    where cityID = #{cityID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_common_city
+    where cityID = #{cityID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.CommonCityExample">
+    delete from ylfs_common_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.CommonCity">
+    insert into ylfs_common_city (cityID, provinceID, cityName, 
+      state, spell, orderNo, 
+      areaCode, isHot, createdTimestamp, 
+      lastModified, cityCode)
+    values (#{cityID,jdbcType=INTEGER}, #{provinceID,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}, 
+      #{state,jdbcType=SMALLINT}, #{spell,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, 
+      #{areaCode,jdbcType=VARCHAR}, #{isHot,jdbcType=SMALLINT}, #{createdTimestamp,jdbcType=BIGINT}, 
+      #{lastModified,jdbcType=BIGINT}, #{cityCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.CommonCity">
+    insert into ylfs_common_city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityID != null">
+        cityID,
+      </if>
+      <if test="provinceID != null">
+        provinceID,
+      </if>
+      <if test="cityName != null">
+        cityName,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="spell != null">
+        spell,
+      </if>
+      <if test="orderNo != null">
+        orderNo,
+      </if>
+      <if test="areaCode != null">
+        areaCode,
+      </if>
+      <if test="isHot != null">
+        isHot,
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp,
+      </if>
+      <if test="lastModified != null">
+        lastModified,
+      </if>
+      <if test="cityCode != null">
+        cityCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityID != null">
+        #{cityID,jdbcType=INTEGER},
+      </if>
+      <if test="provinceID != null">
+        #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="spell != null">
+        #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null">
+        #{lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.CommonCityExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_common_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_common_city
+    <set>
+      <if test="record.cityID != null">
+        cityID = #{record.cityID,jdbcType=INTEGER},
+      </if>
+      <if test="record.provinceID != null">
+        provinceID = #{record.provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityName != null">
+        cityName = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.spell != null">
+        spell = #{record.spell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null">
+        orderNo = #{record.orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaCode != null">
+        areaCode = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHot != null">
+        isHot = #{record.isHot,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createdTimestamp != null">
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModified != null">
+        lastModified = #{record.lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityCode != null">
+        cityCode = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_common_city
+    set cityID = #{record.cityID,jdbcType=INTEGER},
+      provinceID = #{record.provinceID,jdbcType=INTEGER},
+      cityName = #{record.cityName,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT},
+      spell = #{record.spell,jdbcType=VARCHAR},
+      orderNo = #{record.orderNo,jdbcType=INTEGER},
+      areaCode = #{record.areaCode,jdbcType=VARCHAR},
+      isHot = #{record.isHot,jdbcType=SMALLINT},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      lastModified = #{record.lastModified,jdbcType=BIGINT},
+      cityCode = #{record.cityCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.CommonCity">
+    update ylfs_common_city
+    <set>
+      <if test="provinceID != null">
+        provinceID = #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null">
+        cityName = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="spell != null">
+        spell = #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        orderNo = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null">
+        areaCode = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        isHot = #{isHot,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null">
+        lastModified = #{lastModified,jdbcType=BIGINT},
+      </if>
+      <if test="cityCode != null">
+        cityCode = #{cityCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cityID = #{cityID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.CommonCity">
+    update ylfs_common_city
+    set provinceID = #{provinceID,jdbcType=INTEGER},
+      cityName = #{cityName,jdbcType=VARCHAR},
+      state = #{state,jdbcType=SMALLINT},
+      spell = #{spell,jdbcType=VARCHAR},
+      orderNo = #{orderNo,jdbcType=INTEGER},
+      areaCode = #{areaCode,jdbcType=VARCHAR},
+      isHot = #{isHot,jdbcType=SMALLINT},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      lastModified = #{lastModified,jdbcType=BIGINT},
+      cityCode = #{cityCode,jdbcType=VARCHAR}
+    where cityID = #{cityID,jdbcType=INTEGER}
+  </update>
+</mapper>

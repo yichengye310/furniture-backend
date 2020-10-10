@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="wxPay">微信支付</button>
+</body>
+
+<script language="JavaScript" src="jquery-3.4.1.min.js"></script>
+<script>
+    console.log("sdsd");
+    $(function(){
+        $("#wxPay").click(function () {
+            //请求参数
+            var list = {};
+            $.ajax({
+                //请求方式
+                type : "POST",
+                //请求的媒体类型
+                contentType: "application/json;charset=UTF-8",
+                //请求地址
+                url : "http://localhost:8081/wxPay/H5pay",
+                //数据，json字符串
+                //data : JSON.stringify(list),
+                //请求成功
+                success : function(result) {
+                    console.log(result);
+                    var mweb_url = result.data.mweb_url;
+                    console.log(mweb_url);
+                    self.location.href="http://www.ammsshop.com";
+                },
+                //请求失败，包含具体的错误信息
+                error : function(e){
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        })
+    });
+</script>
+</html>

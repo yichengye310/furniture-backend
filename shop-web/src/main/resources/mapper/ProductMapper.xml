@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.ProductMapper">
+  <resultMap type="com.example.springboot.entity.Product" id="BaseResultMap">
+    <id column="productID" jdbcType="INTEGER" property="productID" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="state" jdbcType="SMALLINT" property="state" />
+    <result column="productStockNum" jdbcType="INTEGER" property="productStockNum" />
+    <result column="styleID" jdbcType="INTEGER" property="styleID" />
+    <result column="levelThreeCategoryID" jdbcType="INTEGER" property="levelThreeCategoryID" />
+    <result column="levelTwoCategoryID" jdbcType="INTEGER" property="levelTwoCategoryID" />
+    <result column="levelOneCategoryID" jdbcType="INTEGER" property="levelOneCategoryID" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="productDescription" jdbcType="VARCHAR" property="productDescription" />
+    <result column="titleImg" jdbcType="VARCHAR" property="titleImg" />
+    <result column="titleVideo" jdbcType="VARCHAR" property="titleVideo" />
+    <result column="styleName" jdbcType="VARCHAR" property="styleName" />
+    <result column="recommendPriority" jdbcType="INTEGER" property="recommendPriority" />
+    <result column="collectNum" jdbcType="INTEGER" property="collectNum" />
+    <result column="boughtNum" jdbcType="INTEGER" property="boughtNum" />
+    <result column="browseNum" jdbcType="INTEGER" property="browseNum" />
+    <result column="deliveryCycle" jdbcType="VARCHAR" property="deliveryCycle" />
+    <result column="isSpecialGoods" jdbcType="SMALLINT" property="isSpecialGoods" />
+    <result column="vipProductType" jdbcType="SMALLINT" property="vipProductType" />
+    <result column="lowPrice" jdbcType="INTEGER" property="lowPrice" />
+  </resultMap>
+  <resultMap type="com.example.springboot.dto.ProductDTO" id="DTOBaseResultMap">
+    <id column="productID" jdbcType="INTEGER" property="productID" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="state" jdbcType="SMALLINT" property="state" />
+    <result column="productStockNum" jdbcType="INTEGER" property="productStockNum" />
+    <result column="styleID" jdbcType="INTEGER" property="styleID" />
+    <result column="levelThreeCategoryID" jdbcType="INTEGER" property="levelThreeCategoryID" />
+    <result column="levelTwoCategoryID" jdbcType="INTEGER" property="levelTwoCategoryID" />
+    <result column="levelOneCategoryID" jdbcType="INTEGER" property="levelOneCategoryID" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="productDescription" jdbcType="VARCHAR" property="productDescription" />
+    <result column="titleImg" jdbcType="VARCHAR" property="titleImg" />
+    <result column="titleVideo" jdbcType="VARCHAR" property="titleVideo" />
+    <result column="styleName" jdbcType="VARCHAR" property="styleName" />
+    <result column="recommendPriority" jdbcType="INTEGER" property="recommendPriority" />
+    <result column="collectNum" jdbcType="INTEGER" property="collectNum" />
+    <result column="boughtNum" jdbcType="INTEGER" property="boughtNum" />
+    <result column="browseNum" jdbcType="INTEGER" property="browseNum" />
+    <result column="deliveryCycle" jdbcType="VARCHAR" property="deliveryCycle" />
+    <result column="isSpecialGoods" jdbcType="SMALLINT" property="isSpecialGoods" />
+    <result column="vipProductType" jdbcType="SMALLINT" property="vipProductType" />
+    <result column="lowPrice" jdbcType="INTEGER" property="lowPrice" />
+    <association property="productDetail" javaType="com.example.springboot.entity.ProductDetail" column="productID" select="com.example.springboot.mapper.ProductDetailMapper.selectByPrimaryKey" />
+    <collection property="commonImage" ofType="com.example.springboot.entity.CommonImage" column="{relationID=productId}" select="com.example.springboot.mapper.CommonImageMapper.selectProductTitleImgByRelationID" />
+    <collection property="productStandards" ofType="com.example.springboot.dto.ProductStandardsDTO" column="{bandProductID=productId}" select="com.example.springboot.mapper.ProductStandardsMapper.selectByBandProductID" />
+  </resultMap>
+  <resultMap type="com.example.springboot.dto.ProductDTO" id="HotRecommendationBaseResultMap">
+    <id column="productID" jdbcType="INTEGER" property="productID" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <collection property="productStandards" ofType="com.example.springboot.dto.ProductStandardsDTO" column="{bandProductID=productId}" select="com.example.springboot.mapper.ProductStandardsMapper.selectByBandProductID" />
+  </resultMap>
+  <sql id="selectSql">
+    productID, productCode, state, productStockNum, levelThreeCategoryID, levelTwoCategoryID, levelOneCategoryID,
+    productName,productDescription, titleImg, titleVideo,styleName,recommendPriority, collectNum, boughtNum, createdTimestamp,
+    browseNum, deliveryCycle,isSpecialGoods,vipProductType,lowPrice
+  </sql>
+  <sql id="selectListSql">
+    SELECT
+    p.*
+    FROM ylfs_product p
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+    <if test="state != null">
+      AND state = #{state}
+    </if>
+    <if test="productCode != null">
+      AND productCode = #{productCode}
+    </if>
+    <if test="styleID != null">
+      AND styleID = #{styleID}
+    </if>
+    <if test="levelThreeCategoryID != null">
+      AND levelThreeCategoryID = #{levelThreeCategoryID}
+    </if>
+    <if test="levelTwoCategoryID != null">
+      AND levelTwoCategoryID = #{levelTwoCategoryID}
+    </if>
+    <if test="levelOneCategoryID != null">
+      AND levelOneCategoryID = #{levelOneCategoryID}
+    </if>
+    <if test="keywords != null">
+      AND (
+      productName LIKE CONCAT('%', CONCAT( #{keywords}, '%'))
+      OR productDescription LIKE CONCAT('%', CONCAT( #{keywords}, '%'))
+      OR styleName LIKE CONCAT('%', CONCAT( #{keywords}, '%'))
+      )
+    </if>
+    <if test="productName != null">
+      AND productName LIKE CONCAT('%', CONCAT( #{productName}, '%'))
+    </if>
+    <if test="productDescription != null">
+      AND productDescription LIKE CONCAT('%', CONCAT( #{productDescription}, '%'))
+    </if>
+    <if test="styleName != null">
+      AND styleName LIKE CONCAT('%', CONCAT( #{styleName}, '%'))
+    </if>
+    <if test="recommendPriority != null">
+      AND recommendPriority = #{recommendPriority}
+    </if>
+    <if test="isSpecialGoods != null">
+      AND isSpecialGoods = #{isSpecialGoods}
+    </if>
+    <if test="vipProductType != null">
+      AND vipProductType = #{vipProductType}
+    </if>
+    AND state!=9
+  </sql>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    productID, productCode, state, productStockNum,
+    styleID, levelThreeCategoryID, levelTwoCategoryID, levelOneCategoryID,
+    productName, productDescription, titleImg, titleVideo,styleName,recommendPriority, collectNum, boughtNum, createdTimestamp,
+    browseNum, deliveryCycle,isSpecialGoods,vipProductType,lowPrice
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="DTOBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    where productID = #{productID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_product
+    where productID = #{productID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.ProductExample">
+    delete from ylfs_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.Product">
+    insert into ylfs_product (productID, productCode, state,
+      productStockNum,
+      styleID, levelThreeCategoryID,
+      levelTwoCategoryID, levelOneCategoryID, 
+      productName,productDescription, titleImg,titleVideo,
+      styleName,recommendPriority,
+      collectNum, boughtNum, createdTimestamp, browseNum,
+        deliveryCycle, isSpecialGoods,vipProductType,lowPrice)
+    values (#{productID,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
+      #{productStockNum,jdbcType=INTEGER},
+      #{styleID,jdbcType=INTEGER}, #{levelThreeCategoryID,jdbcType=INTEGER},
+      #{levelTwoCategoryID,jdbcType=INTEGER}, #{levelOneCategoryID,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR},#{productDescription,jdbcType=VARCHAR}, #{titleImg,jdbcType=VARCHAR},#{titleVideo,jdbcType=VARCHAR},
+      #{styleName,jdbcType=VARCHAR}, #{recommendPriority,jdbcType=INTEGER},
+      #{collectNum,jdbcType=INTEGER}, #{boughtNum,jdbcType=INTEGER}, #{createdTimestamp,jdbcType=BIGINT},
+      #{browseNum,jdbcType=INTEGER}, #{deliveryCycle,jdbcType=VARCHAR},#{isSpecialGoods,jdbcType=SMALLINT},#{vipProductType,jdbcType=SMALLINT},
+            #{lowPrice,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="productID" parameterType="com.example.springboot.entity.Product">
+    insert into ylfs_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productID != null">
+        productID,
+      </if>
+      <if test="productCode != null">
+        productCode,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="productStockNum != null">
+        productStockNum,
+      </if>
+      <if test="styleID != null">
+        styleID,
+      </if>
+      <if test="levelThreeCategoryID != null">
+        levelThreeCategoryID,
+      </if>
+      <if test="levelTwoCategoryID != null">
+        levelTwoCategoryID,
+      </if>
+      <if test="levelOneCategoryID != null">
+        levelOneCategoryID,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="productDescription != null">
+        productDescription,
+      </if>
+      <if test="titleImg != null">
+        titleImg,
+      </if>
+      <if test="titleVideo != null">
+        titleVideo,
+      </if>
+      <if test="styleName != null">
+        styleName,
+      </if>
+      <if test="recommendPriority != null">
+        recommendPriority,
+      </if>
+      <if test="collectNum != null">
+        collectNum,
+      </if>
+      <if test="boughtNum != null">
+        boughtNum,
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp,
+      </if>
+      <if test="browseNum != null">
+        browseNum,
+      </if>
+      <if test="deliveryCycle != null">
+        deliveryCycle,
+      </if>
+      <if test="isSpecialGoods != null">
+        isSpecialGoods,
+      </if>
+      <if test="vipProductType != null">
+        vipProductType,
+      </if>
+      <if test="lowPrice != null">
+        lowPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productID != null">
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="productStockNum != null">
+        #{productStockNum,jdbcType=INTEGER},
+      </if>
+      <if test="styleID != null">
+        #{styleID,jdbcType=INTEGER},
+      </if>
+      <if test="levelThreeCategoryID != null">
+        #{levelThreeCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="levelTwoCategoryID != null">
+        #{levelTwoCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="levelOneCategoryID != null">
+        #{levelOneCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="titleImg != null">
+        #{titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="titleVideo != null">
+        #{titleVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleName != null">
+        #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPriority != null">
+        #{recommendPriority,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="boughtNum != null">
+        #{boughtNum,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="browseNum != null">
+        #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryCycle != null">
+        #{deliveryCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="isSpecialGoods != null">
+        #{isSpecialGoods,jdbcType=SMALLINT},
+      </if>
+      <if test="vipProductType != null">
+        #{vipProductType,jdbcType=SMALLINT},
+      </if>
+      <if test="lowPrice != null">
+        #{lowPrice,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.ProductExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_product
+    <set>
+      <if test="record.productID != null">
+        productID = #{record.productID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productCode != null">
+        productCode = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.productStockNum != null">
+        productStockNum = #{record.productStockNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.styleID != null">
+        styleID = #{record.styleID,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelThreeCategoryID != null">
+        levelThreeCategoryID = #{record.levelThreeCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelTwoCategoryID != null">
+        levelTwoCategoryID = #{record.levelTwoCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelOneCategoryID != null">
+        levelOneCategoryID = #{record.levelOneCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDescription != null">
+        productDescription = #{record.productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleImg != null">
+        titleImg = #{record.titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleVideo != null">
+        titleVideo = #{record.titleVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.styleName != null">
+        styleName = #{record.styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendPriority != null">
+        recommendPriority = #{record.recommendPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectNum != null">
+        collectNum = #{record.collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.boughtNum != null">
+        boughtNum = #{record.boughtNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTimestamp != null">
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.browseNum != null">
+        browseNum = #{record.browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryCycle != null">
+        deliveryCycle = #{record.deliveryCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSpecialGoods != null">
+        isSpecialGoods = #{record.isSpecialGoods,jdbcType=SMALLINT},
+      </if>
+      <if test="record.vipProductType != null">
+        vipProductType = #{record.vipProductType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.lowPrice != null">
+        lowPrice = #{record.lowPrice,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_product
+    set productID = #{record.productID,jdbcType=INTEGER},
+      productCode = #{record.productCode,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT},
+      productStockNum = #{record.productStockNum,jdbcType=INTEGER},
+      styleID = #{record.styleID,jdbcType=INTEGER},
+      levelThreeCategoryID = #{record.levelThreeCategoryID,jdbcType=INTEGER},
+      levelTwoCategoryID = #{record.levelTwoCategoryID,jdbcType=INTEGER},
+      levelOneCategoryID = #{record.levelOneCategoryID,jdbcType=INTEGER},
+      productName = #{record.productName,jdbcType=VARCHAR},
+      productDescription = #{record.productDescription,jdbcType=VARCHAR},
+      titleImg = #{record.titleImg,jdbcType=VARCHAR},
+      titleVideo = #{record.titleVideo,jdbcType=VARCHAR},
+      styleName = #{record.styleName,jdbcType=VARCHAR},
+      recommendPriority = #{record.recommendPriority,jdbcType=INTEGER},
+      collectNum = #{record.collectNum,jdbcType=INTEGER},
+      boughtNum = #{record.boughtNum,jdbcType=INTEGER},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      browseNum = #{record.browseNum,jdbcType=INTEGER},
+      deliveryCycle = #{record.deliveryCycle,jdbcType=VARCHAR},
+      isSpecialGoods = #{record.isSpecialGoods,jdbcType=SMALLINT},
+      vipProductType = #{record.vipProductType,jdbcType=SMALLINT},
+      lowPrice = #{record.lowPrice,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.Product">
+    update ylfs_product
+    <set>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="productStockNum != null">
+        productStockNum = #{productStockNum,jdbcType=INTEGER},
+      </if>
+      <if test="styleID != null">
+        styleID = #{styleID,jdbcType=INTEGER},
+      </if>
+      <if test="levelThreeCategoryID != null">
+        levelThreeCategoryID = #{levelThreeCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="levelTwoCategoryID != null">
+        levelTwoCategoryID = #{levelTwoCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="levelOneCategoryID != null">
+        levelOneCategoryID = #{levelOneCategoryID,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        productDescription = #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="titleImg != null">
+        titleImg = #{titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="titleVideo != null">
+        titleVideo = #{titleVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleName != null">
+        styleName = #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPriority != null">
+        recommendPriority = #{recommendPriority,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        collectNum = #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="boughtNum != null">
+        boughtNum = #{boughtNum,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="browseNum != null">
+        browseNum = #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryCycle != null">
+        deliveryCycle = #{deliveryCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="isSpecialGoods != null">
+        isSpecialGoods = #{isSpecialGoods,jdbcType=SMALLINT},
+      </if>
+      <if test="vipProductType != null">
+        vipProductType = #{vipProductType,jdbcType=SMALLINT},
+      </if>
+      <if test="lowPrice != null">
+        lowPrice = #{lowPrice,jdbcType=INTEGER},
+      </if>
+    </set>
+    where productID = #{productID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.Product">
+    update ylfs_product
+    set productCode = #{productCode,jdbcType=VARCHAR},
+      state = #{state,jdbcType=SMALLINT},
+      productStockNum = #{productStockNum,jdbcType=INTEGER},
+      styleID = #{styleID,jdbcType=INTEGER},
+      levelThreeCategoryID = #{levelThreeCategoryID,jdbcType=INTEGER},
+      levelTwoCategoryID = #{levelTwoCategoryID,jdbcType=INTEGER},
+      levelOneCategoryID = #{levelOneCategoryID,jdbcType=INTEGER},
+      productName = #{productName,jdbcType=VARCHAR},
+      productDescription = #{productDescription,jdbcType=VARCHAR},
+      titleImg = #{titleImg,jdbcType=VARCHAR},
+      titleVideo = #{titleVideo,jdbcType=VARCHAR},
+      styleName = #{styleName,jdbcType=VARCHAR},
+      recommendPriority = #{recommendPriority,jdbcType=INTEGER},
+      collectNum = #{collectNum,jdbcType=INTEGER},
+      boughtNum = #{boughtNum,jdbcType=INTEGER},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      browseNum = #{browseNum,jdbcType=INTEGER},
+      deliveryCycle = #{deliveryCycle,jdbcType=VARCHAR},
+      isSpecialGoods = #{isSpecialGoods,jdbcType=SMALLINT},
+      vipProductType = #{vipProductType,jdbcType=SMALLINT},
+      lowPrice = #{lowPrice,jdbcType=INTEGER}
+    where productID = #{productID,jdbcType=INTEGER}
+  </update>
+  <select id="productListByPage" resultMap="DTOBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    <include refid="whereSql"></include>
+  </select>
+  <update id="addCollectNum" parameterType="java.lang.Integer">
+    update ylfs_product
+    set collectNum = collectNum+1
+    where productID = #{productID,jdbcType=INTEGER}
+  </update>
+  <update id="cancelCollectNum" parameterType="java.lang.Integer">
+    update ylfs_product
+    set collectNum = collectNum-1
+    where productID = #{productID,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKeyForOther" resultMap="HotRecommendationBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    where productID = #{productID,jdbcType=INTEGER}
+  </select>
+  <update id="updateBrowseNum" parameterType="java.lang.Integer">
+    update ylfs_product
+    set browseNum = browseNum+1
+    where productID = #{productID,jdbcType=INTEGER}
+  </update>
+  <select id="selectByProductIDs" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from ylfs_product
+    where productID IN <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+  </select>
+
+  <update id="updateCollectNum" parameterType="java.lang.Integer" >
+    update ylfs_product yp left join ylfs_user_collection yuc on yuc.productID = yp.productID
+    set yp.collectNum = yp.collectNum-1
+    where yuc.collectedProductID = #{collectedProductID,jdbcType=INTEGER}
+  </update>
+</mapper>

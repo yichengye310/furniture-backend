@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.UserInfo" >
+    <id column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <result column="userType" property="userType" jdbcType="SMALLINT" />
+    <result column="userLevel" property="userLevel" jdbcType="SMALLINT" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="userPwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="relatedAgentID" property="relatedAgentID" jdbcType="VARCHAR" />
+    <result column="relatedAgentName" property="relatedAgentName" jdbcType="VARCHAR" />
+    <result column="createdTimeStamp" property="createdTimeStamp" jdbcType="BIGINT" />
+    <result column="creatorType" property="creatorType" jdbcType="SMALLINT" />
+    <result column="creatorID" property="creatorID" jdbcType="INTEGER" />
+    <result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+    <result column="isOpenLive" property="isOpenLive" jdbcType="INTEGER" />
+    <result column="lastModifiedTimeStamp" property="lastModifiedTimeStamp" jdbcType="BIGINT" />
+    <result column="lastModifierType" property="lastModifierType" jdbcType="SMALLINT" />
+    <result column="lastModifierID" property="lastModifierID" jdbcType="INTEGER" />
+    <result column="lastModifierName" property="lastModifierName" jdbcType="VARCHAR" />
+    <result column="wxOpenID" property="wxOpenID" jdbcType="VARCHAR" />
+    <result column="relatedSubscriptionOpenID" property="relatedSubscriptionOpenID" jdbcType="VARCHAR" />
+    <result column="portrait" property="portrait" jdbcType="VARCHAR" />
+    <result column="personalSign" property="personalSign" jdbcType="VARCHAR" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    <result column="provinceID" property="provinceID" jdbcType="INTEGER" />
+    <result column="cityID" property="cityID" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userID, state, userType, userLevel, userName, phoneNumber, userPwd, relatedAgentID, 
+    relatedAgentName, createdTimeStamp, creatorType, creatorID, creatorName, isOpenLive, 
+    lastModifiedTimeStamp, lastModifierType, lastModifierID, lastModifierName, wxOpenID, 
+    relatedSubscriptionOpenID, portrait, personalSign, provinceName, cityName, provinceID, 
+    cityID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_user_info
+    where userID = #{userID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ylfs_user_info
+    where userID = #{userID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.UserInfoExample" >
+    delete from ylfs_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.UserInfo" >
+    insert into ylfs_user_info (userID, state, userType, 
+      userLevel, userName, phoneNumber, 
+      userPwd, relatedAgentID, relatedAgentName, 
+      createdTimeStamp, creatorType, creatorID, 
+      creatorName, isOpenLive, lastModifiedTimeStamp, 
+      lastModifierType, lastModifierID, lastModifierName, 
+      wxOpenID, relatedSubscriptionOpenID, portrait, 
+      personalSign, provinceName, cityName, 
+      provinceID, cityID)
+    values (#{userID,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, #{userType,jdbcType=SMALLINT}, 
+      #{userLevel,jdbcType=SMALLINT}, #{userName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR}, #{relatedAgentID,jdbcType=VARCHAR}, #{relatedAgentName,jdbcType=VARCHAR}, 
+      #{createdTimeStamp,jdbcType=BIGINT}, #{creatorType,jdbcType=SMALLINT}, #{creatorID,jdbcType=INTEGER}, 
+      #{creatorName,jdbcType=VARCHAR}, #{isOpenLive,jdbcType=INTEGER}, #{lastModifiedTimeStamp,jdbcType=BIGINT}, 
+      #{lastModifierType,jdbcType=SMALLINT}, #{lastModifierID,jdbcType=INTEGER}, #{lastModifierName,jdbcType=VARCHAR}, 
+      #{wxOpenID,jdbcType=VARCHAR}, #{relatedSubscriptionOpenID,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, 
+      #{personalSign,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{provinceID,jdbcType=INTEGER}, #{cityID,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.UserInfo" >
+    insert into ylfs_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="userType != null" >
+        userType,
+      </if>
+      <if test="userLevel != null" >
+        userLevel,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber,
+      </if>
+      <if test="userPwd != null" >
+        userPwd,
+      </if>
+      <if test="relatedAgentID != null" >
+        relatedAgentID,
+      </if>
+      <if test="relatedAgentName != null" >
+        relatedAgentName,
+      </if>
+      <if test="createdTimeStamp != null" >
+        createdTimeStamp,
+      </if>
+      <if test="creatorType != null" >
+        creatorType,
+      </if>
+      <if test="creatorID != null" >
+        creatorID,
+      </if>
+      <if test="creatorName != null" >
+        creatorName,
+      </if>
+      <if test="isOpenLive != null" >
+        isOpenLive,
+      </if>
+      <if test="lastModifiedTimeStamp != null" >
+        lastModifiedTimeStamp,
+      </if>
+      <if test="lastModifierType != null" >
+        lastModifierType,
+      </if>
+      <if test="lastModifierID != null" >
+        lastModifierID,
+      </if>
+      <if test="lastModifierName != null" >
+        lastModifierName,
+      </if>
+      <if test="wxOpenID != null" >
+        wxOpenID,
+      </if>
+      <if test="relatedSubscriptionOpenID != null" >
+        relatedSubscriptionOpenID,
+      </if>
+      <if test="portrait != null" >
+        portrait,
+      </if>
+      <if test="personalSign != null" >
+        personalSign,
+      </if>
+      <if test="provinceName != null" >
+        provinceName,
+      </if>
+      <if test="cityName != null" >
+        cityName,
+      </if>
+      <if test="provinceID != null" >
+        provinceID,
+      </if>
+      <if test="cityID != null" >
+        cityID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAgentID != null" >
+        #{relatedAgentID,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAgentName != null" >
+        #{relatedAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimeStamp != null" >
+        #{createdTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="creatorType != null" >
+        #{creatorType,jdbcType=SMALLINT},
+      </if>
+      <if test="creatorID != null" >
+        #{creatorID,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpenLive != null" >
+        #{isOpenLive,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTimeStamp != null" >
+        #{lastModifiedTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierType != null" >
+        #{lastModifierType,jdbcType=SMALLINT},
+      </if>
+      <if test="lastModifierID != null" >
+        #{lastModifierID,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifierName != null" >
+        #{lastModifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenID != null" >
+        #{wxOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedSubscriptionOpenID != null" >
+        #{relatedSubscriptionOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSign != null" >
+        #{personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceID != null" >
+        #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="cityID != null" >
+        #{cityID,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_user_info
+    <set >
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userType != null" >
+        userType = #{record.userType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userLevel != null" >
+        userLevel = #{record.userLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPwd != null" >
+        userPwd = #{record.userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relatedAgentID != null" >
+        relatedAgentID = #{record.relatedAgentID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relatedAgentName != null" >
+        relatedAgentName = #{record.relatedAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTimeStamp != null" >
+        createdTimeStamp = #{record.createdTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorType != null" >
+        creatorType = #{record.creatorType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.creatorID != null" >
+        creatorID = #{record.creatorID,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorName != null" >
+        creatorName = #{record.creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOpenLive != null" >
+        isOpenLive = #{record.isOpenLive,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastModifiedTimeStamp != null" >
+        lastModifiedTimeStamp = #{record.lastModifiedTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifierType != null" >
+        lastModifierType = #{record.lastModifierType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.lastModifierID != null" >
+        lastModifierID = #{record.lastModifierID,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastModifierName != null" >
+        lastModifierName = #{record.lastModifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxOpenID != null" >
+        wxOpenID = #{record.wxOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relatedSubscriptionOpenID != null" >
+        relatedSubscriptionOpenID = #{record.relatedSubscriptionOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portrait != null" >
+        portrait = #{record.portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalSign != null" >
+        personalSign = #{record.personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceName != null" >
+        provinceName = #{record.provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityName != null" >
+        cityName = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceID != null" >
+        provinceID = #{record.provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityID != null" >
+        cityID = #{record.cityID,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_user_info
+    set userID = #{record.userID,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT},
+      userType = #{record.userType,jdbcType=SMALLINT},
+      userLevel = #{record.userLevel,jdbcType=SMALLINT},
+      userName = #{record.userName,jdbcType=VARCHAR},
+      phoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      userPwd = #{record.userPwd,jdbcType=VARCHAR},
+      relatedAgentID = #{record.relatedAgentID,jdbcType=VARCHAR},
+      relatedAgentName = #{record.relatedAgentName,jdbcType=VARCHAR},
+      createdTimeStamp = #{record.createdTimeStamp,jdbcType=BIGINT},
+      creatorType = #{record.creatorType,jdbcType=SMALLINT},
+      creatorID = #{record.creatorID,jdbcType=INTEGER},
+      creatorName = #{record.creatorName,jdbcType=VARCHAR},
+      isOpenLive = #{record.isOpenLive,jdbcType=INTEGER},
+      lastModifiedTimeStamp = #{record.lastModifiedTimeStamp,jdbcType=BIGINT},
+      lastModifierType = #{record.lastModifierType,jdbcType=SMALLINT},
+      lastModifierID = #{record.lastModifierID,jdbcType=INTEGER},
+      lastModifierName = #{record.lastModifierName,jdbcType=VARCHAR},
+      wxOpenID = #{record.wxOpenID,jdbcType=VARCHAR},
+      relatedSubscriptionOpenID = #{record.relatedSubscriptionOpenID,jdbcType=VARCHAR},
+      portrait = #{record.portrait,jdbcType=VARCHAR},
+      personalSign = #{record.personalSign,jdbcType=VARCHAR},
+      provinceName = #{record.provinceName,jdbcType=VARCHAR},
+      cityName = #{record.cityName,jdbcType=VARCHAR},
+      provinceID = #{record.provinceID,jdbcType=INTEGER},
+      cityID = #{record.cityID,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.UserInfo" >
+    update ylfs_user_info
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="userType != null" >
+        userType = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="userLevel != null" >
+        userLevel = #{userLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        userPwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAgentID != null" >
+        relatedAgentID = #{relatedAgentID,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedAgentName != null" >
+        relatedAgentName = #{relatedAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimeStamp != null" >
+        createdTimeStamp = #{createdTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="creatorType != null" >
+        creatorType = #{creatorType,jdbcType=SMALLINT},
+      </if>
+      <if test="creatorID != null" >
+        creatorID = #{creatorID,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creatorName = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpenLive != null" >
+        isOpenLive = #{isOpenLive,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifiedTimeStamp != null" >
+        lastModifiedTimeStamp = #{lastModifiedTimeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierType != null" >
+        lastModifierType = #{lastModifierType,jdbcType=SMALLINT},
+      </if>
+      <if test="lastModifierID != null" >
+        lastModifierID = #{lastModifierID,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifierName != null" >
+        lastModifierName = #{lastModifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenID != null" >
+        wxOpenID = #{wxOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedSubscriptionOpenID != null" >
+        relatedSubscriptionOpenID = #{relatedSubscriptionOpenID,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        portrait = #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSign != null" >
+        personalSign = #{personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        provinceName = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        cityName = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceID != null" >
+        provinceID = #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="cityID != null" >
+        cityID = #{cityID,jdbcType=INTEGER},
+      </if>
+    </set>
+    where userID = #{userID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.UserInfo" >
+    update ylfs_user_info
+    set state = #{state,jdbcType=SMALLINT},
+      userType = #{userType,jdbcType=SMALLINT},
+      userLevel = #{userLevel,jdbcType=SMALLINT},
+      userName = #{userName,jdbcType=VARCHAR},
+      phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      userPwd = #{userPwd,jdbcType=VARCHAR},
+      relatedAgentID = #{relatedAgentID,jdbcType=VARCHAR},
+      relatedAgentName = #{relatedAgentName,jdbcType=VARCHAR},
+      createdTimeStamp = #{createdTimeStamp,jdbcType=BIGINT},
+      creatorType = #{creatorType,jdbcType=SMALLINT},
+      creatorID = #{creatorID,jdbcType=INTEGER},
+      creatorName = #{creatorName,jdbcType=VARCHAR},
+      isOpenLive = #{isOpenLive,jdbcType=INTEGER},
+      lastModifiedTimeStamp = #{lastModifiedTimeStamp,jdbcType=BIGINT},
+      lastModifierType = #{lastModifierType,jdbcType=SMALLINT},
+      lastModifierID = #{lastModifierID,jdbcType=INTEGER},
+      lastModifierName = #{lastModifierName,jdbcType=VARCHAR},
+      wxOpenID = #{wxOpenID,jdbcType=VARCHAR},
+      relatedSubscriptionOpenID = #{relatedSubscriptionOpenID,jdbcType=VARCHAR},
+      portrait = #{portrait,jdbcType=VARCHAR},
+      personalSign = #{personalSign,jdbcType=VARCHAR},
+      provinceName = #{provinceName,jdbcType=VARCHAR},
+      cityName = #{cityName,jdbcType=VARCHAR},
+      provinceID = #{provinceID,jdbcType=INTEGER},
+      cityID = #{cityID,jdbcType=INTEGER}
+    where userID = #{userID,jdbcType=VARCHAR}
+  </update>
+</mapper>

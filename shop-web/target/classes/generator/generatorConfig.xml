@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
+<!--    <classPathEntry  location="E:\maven-repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>-->
+    <classPathEntry  location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>
+    <context id="DB2Tables"  targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库连接驱动类,URL，用户名、密码 -->
+<!--        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://120.79.99.73:3306/furniture_shop" userId="root" password="123456">-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://36.154.123.82:3306/furniture_shop" userId="root" password="YLCloud1788%">
+        </jdbcConnection>
+
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!-- 生成(实体)模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.example.springboot.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+
+        <!-- 生成XML映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="resources.mapper" targetProject="src/main">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO接口的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.springboot.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+<!--        <table tableName="ylfs_user_coupon" domainObjectName="UserCoupon">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_coupon_model" domainObjectName="CouponModel">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+        <!--
+            <table tableName="user" domainObjectName="user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        -->
+<!--        <table tableName="ylfs_common_city" domainObjectName="CommonCity">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_common_district" domainObjectName="CommonDistrict">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_common_province" domainObjectName="CommonProvince">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_order_paid_record" domainObjectName="OrderPaidRecord">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_order_purchase_order" domainObjectName="OrderPurchaseOrder">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product" domainObjectName="Product">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_category_level_one" domainObjectName="ProductCategoryLevelOne">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_category_level_three" domainObjectName="ProductCategoryLevelThree">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_category_level_two" domainObjectName="ProductCategoryLevelTwo">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_constant" domainObjectName="ProductConstant">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_detail" domainObjectName="ProductDetail">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_style" domainObjectName="ProductStyle">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_user_adress" domainObjectName="UserAdress">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+        <table tableName="ylfs_order_paid_record" domainObjectName="OrderPaidRecord">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+<!--        <table tableName="ylfs_shop_location" domainObjectName="ShopLocation">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_product_comment" domainObjectName="ProductComments">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_user_shoppingcart" domainObjectName="UserShoppingcart">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_standards" domainObjectName="ProductStandards">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_standards_colour" domainObjectName="ProductStandardsColour">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_common_image" domainObjectName="CommonImage">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_on_sale" domainObjectName="ProductsOnSale">-->
+<!--                   <property name="useActualColumnNames" value="true"/>-->
+<!--                </table>-->
+
+<!--        <table tableName="ylfs_user_collection" domainObjectName="UserProductsCollection">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_limited_time_standards_colour" domainObjectName="ProductLimitedTimeStandardsColour">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_limited_time_standards" domainObjectName="ProductLimitedTimeStandards">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_limited_time" domainObjectName="ProductLimitedTime">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_product_limited_time_detail" domainObjectName="ProductLimitedTimeDetail">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_order_delivery_info" domainObjectName="OrderDeliveryInfo">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_user_made_to_order" domainObjectName="UserMadeToOrder">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+
+<!--        <table tableName="ylfs_business_role" domainObjectName="BusinessRole">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_business_user" domainObjectName="BusinessUser">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_user_agreement" domainObjectName="UserAgreement">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_user_already_robbed" domainObjectName="UserAlreadyRobbed">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="ylfs_version" domainObjectName="Version">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_wyyx_live" domainObjectName="WYYXLive">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_ali_live" domainObjectName="AliLive">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ylfs_start_up" domainObjectName="StartUp">-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--        </table>-->
+
+    </context>
+</generatorConfiguration>

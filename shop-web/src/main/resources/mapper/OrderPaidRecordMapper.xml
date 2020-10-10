@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.OrderPaidRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.OrderPaidRecord" >
+    <id column="paidRecordID" property="paidRecordID" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="paymentState" property="paymentState" jdbcType="SMALLINT" />
+    <result column="paidMode" property="paidMode" jdbcType="SMALLINT" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="payerID" property="payerID" jdbcType="VARCHAR" />
+    <result column="payerEmail" property="payerEmail" jdbcType="VARCHAR" />
+    <result column="paidFlowNum" property="paidFlowNum" jdbcType="VARCHAR" />
+    <result column="flowCreatedTime" property="flowCreatedTime" jdbcType="BIGINT" />
+    <result column="flowPaidTime" property="flowPaidTime" jdbcType="BIGINT" />
+    <result column="notificationID" property="notificationID" jdbcType="VARCHAR" />
+    <result column="notificationTime" property="notificationTime" jdbcType="BIGINT" />
+    <result column="verifyTime" property="verifyTime" jdbcType="INTEGER" />
+    <result column="orderID" property="orderID" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.example.springboot.entity.OrderPaidRecord" extends="BaseResultMap" >
+    <result column="notifyLog" property="notifyLog" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    paidRecordID, amount, paymentState, paidMode, userID, userName, payerID, payerEmail, 
+    paidFlowNum, flowCreatedTime, flowPaidTime, notificationID, notificationTime, verifyTime, 
+    orderID
+  </sql>
+  <sql id="Blob_Column_List" >
+    notifyLog
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.example.springboot.entity.OrderPaidRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ylfs_order_paid_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.OrderPaidRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_order_paid_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ylfs_order_paid_record
+    where paidRecordID = #{paidRecordID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_order_paid_record
+    where paidRecordID = #{paidRecordID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.OrderPaidRecordExample" >
+    delete from ylfs_order_paid_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.OrderPaidRecord" >
+    insert into ylfs_order_paid_record (paidRecordID, amount, paymentState, 
+      paidMode, userID, userName, 
+      payerID, payerEmail, paidFlowNum, 
+      flowCreatedTime, flowPaidTime, notificationID, 
+      notificationTime, verifyTime, orderID, 
+      notifyLog)
+    values (#{paidRecordID,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{paymentState,jdbcType=SMALLINT}, 
+      #{paidMode,jdbcType=SMALLINT}, #{userID,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{payerID,jdbcType=VARCHAR}, #{payerEmail,jdbcType=VARCHAR}, #{paidFlowNum,jdbcType=VARCHAR}, 
+      #{flowCreatedTime,jdbcType=BIGINT}, #{flowPaidTime,jdbcType=BIGINT}, #{notificationID,jdbcType=VARCHAR}, 
+      #{notificationTime,jdbcType=BIGINT}, #{verifyTime,jdbcType=INTEGER}, #{orderID,jdbcType=INTEGER}, 
+      #{notifyLog,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.OrderPaidRecord" >
+    insert into ylfs_order_paid_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paidRecordID != null" >
+        paidRecordID,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="paymentState != null" >
+        paymentState,
+      </if>
+      <if test="paidMode != null" >
+        paidMode,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="payerID != null" >
+        payerID,
+      </if>
+      <if test="payerEmail != null" >
+        payerEmail,
+      </if>
+      <if test="paidFlowNum != null" >
+        paidFlowNum,
+      </if>
+      <if test="flowCreatedTime != null" >
+        flowCreatedTime,
+      </if>
+      <if test="flowPaidTime != null" >
+        flowPaidTime,
+      </if>
+      <if test="notificationID != null" >
+        notificationID,
+      </if>
+      <if test="notificationTime != null" >
+        notificationTime,
+      </if>
+      <if test="verifyTime != null" >
+        verifyTime,
+      </if>
+      <if test="orderID != null" >
+        orderID,
+      </if>
+      <if test="notifyLog != null" >
+        notifyLog,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paidRecordID != null" >
+        #{paidRecordID,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="paymentState != null" >
+        #{paymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="paidMode != null" >
+        #{paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerID != null" >
+        #{payerID,jdbcType=VARCHAR},
+      </if>
+      <if test="payerEmail != null" >
+        #{payerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="paidFlowNum != null" >
+        #{paidFlowNum,jdbcType=VARCHAR},
+      </if>
+      <if test="flowCreatedTime != null" >
+        #{flowCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="flowPaidTime != null" >
+        #{flowPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="notificationID != null" >
+        #{notificationID,jdbcType=VARCHAR},
+      </if>
+      <if test="notificationTime != null" >
+        #{notificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="verifyTime != null" >
+        #{verifyTime,jdbcType=INTEGER},
+      </if>
+      <if test="orderID != null" >
+        #{orderID,jdbcType=INTEGER},
+      </if>
+      <if test="notifyLog != null" >
+        #{notifyLog,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.OrderPaidRecordExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_order_paid_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_order_paid_record
+    <set >
+      <if test="record.paidRecordID != null" >
+        paidRecordID = #{record.paidRecordID,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentState != null" >
+        paymentState = #{record.paymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.paidMode != null" >
+        paidMode = #{record.paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerID != null" >
+        payerID = #{record.payerID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerEmail != null" >
+        payerEmail = #{record.payerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paidFlowNum != null" >
+        paidFlowNum = #{record.paidFlowNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowCreatedTime != null" >
+        flowCreatedTime = #{record.flowCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.flowPaidTime != null" >
+        flowPaidTime = #{record.flowPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.notificationID != null" >
+        notificationID = #{record.notificationID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notificationTime != null" >
+        notificationTime = #{record.notificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.verifyTime != null" >
+        verifyTime = #{record.verifyTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderID != null" >
+        orderID = #{record.orderID,jdbcType=INTEGER},
+      </if>
+      <if test="record.notifyLog != null" >
+        notifyLog = #{record.notifyLog,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update ylfs_order_paid_record
+    set paidRecordID = #{record.paidRecordID,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      paymentState = #{record.paymentState,jdbcType=SMALLINT},
+      paidMode = #{record.paidMode,jdbcType=SMALLINT},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      userName = #{record.userName,jdbcType=VARCHAR},
+      payerID = #{record.payerID,jdbcType=VARCHAR},
+      payerEmail = #{record.payerEmail,jdbcType=VARCHAR},
+      paidFlowNum = #{record.paidFlowNum,jdbcType=VARCHAR},
+      flowCreatedTime = #{record.flowCreatedTime,jdbcType=BIGINT},
+      flowPaidTime = #{record.flowPaidTime,jdbcType=BIGINT},
+      notificationID = #{record.notificationID,jdbcType=VARCHAR},
+      notificationTime = #{record.notificationTime,jdbcType=BIGINT},
+      verifyTime = #{record.verifyTime,jdbcType=INTEGER},
+      orderID = #{record.orderID,jdbcType=INTEGER},
+      notifyLog = #{record.notifyLog,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_order_paid_record
+    set paidRecordID = #{record.paidRecordID,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      paymentState = #{record.paymentState,jdbcType=SMALLINT},
+      paidMode = #{record.paidMode,jdbcType=SMALLINT},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      userName = #{record.userName,jdbcType=VARCHAR},
+      payerID = #{record.payerID,jdbcType=VARCHAR},
+      payerEmail = #{record.payerEmail,jdbcType=VARCHAR},
+      paidFlowNum = #{record.paidFlowNum,jdbcType=VARCHAR},
+      flowCreatedTime = #{record.flowCreatedTime,jdbcType=BIGINT},
+      flowPaidTime = #{record.flowPaidTime,jdbcType=BIGINT},
+      notificationID = #{record.notificationID,jdbcType=VARCHAR},
+      notificationTime = #{record.notificationTime,jdbcType=BIGINT},
+      verifyTime = #{record.verifyTime,jdbcType=INTEGER},
+      orderID = #{record.orderID,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.OrderPaidRecord" >
+    update ylfs_order_paid_record
+    <set >
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="paymentState != null" >
+        paymentState = #{paymentState,jdbcType=SMALLINT},
+      </if>
+      <if test="paidMode != null" >
+        paidMode = #{paidMode,jdbcType=SMALLINT},
+      </if>
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerID != null" >
+        payerID = #{payerID,jdbcType=VARCHAR},
+      </if>
+      <if test="payerEmail != null" >
+        payerEmail = #{payerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="paidFlowNum != null" >
+        paidFlowNum = #{paidFlowNum,jdbcType=VARCHAR},
+      </if>
+      <if test="flowCreatedTime != null" >
+        flowCreatedTime = #{flowCreatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="flowPaidTime != null" >
+        flowPaidTime = #{flowPaidTime,jdbcType=BIGINT},
+      </if>
+      <if test="notificationID != null" >
+        notificationID = #{notificationID,jdbcType=VARCHAR},
+      </if>
+      <if test="notificationTime != null" >
+        notificationTime = #{notificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="verifyTime != null" >
+        verifyTime = #{verifyTime,jdbcType=INTEGER},
+      </if>
+      <if test="orderID != null" >
+        orderID = #{orderID,jdbcType=INTEGER},
+      </if>
+      <if test="notifyLog != null" >
+        notifyLog = #{notifyLog,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where paidRecordID = #{paidRecordID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.springboot.entity.OrderPaidRecord" >
+    update ylfs_order_paid_record
+    set amount = #{amount,jdbcType=INTEGER},
+      paymentState = #{paymentState,jdbcType=SMALLINT},
+      paidMode = #{paidMode,jdbcType=SMALLINT},
+      userID = #{userID,jdbcType=VARCHAR},
+      userName = #{userName,jdbcType=VARCHAR},
+      payerID = #{payerID,jdbcType=VARCHAR},
+      payerEmail = #{payerEmail,jdbcType=VARCHAR},
+      paidFlowNum = #{paidFlowNum,jdbcType=VARCHAR},
+      flowCreatedTime = #{flowCreatedTime,jdbcType=BIGINT},
+      flowPaidTime = #{flowPaidTime,jdbcType=BIGINT},
+      notificationID = #{notificationID,jdbcType=VARCHAR},
+      notificationTime = #{notificationTime,jdbcType=BIGINT},
+      verifyTime = #{verifyTime,jdbcType=INTEGER},
+      orderID = #{orderID,jdbcType=INTEGER},
+      notifyLog = #{notifyLog,jdbcType=LONGVARCHAR}
+    where paidRecordID = #{paidRecordID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.OrderPaidRecord" >
+    update ylfs_order_paid_record
+    set amount = #{amount,jdbcType=INTEGER},
+      paymentState = #{paymentState,jdbcType=SMALLINT},
+      paidMode = #{paidMode,jdbcType=SMALLINT},
+      userID = #{userID,jdbcType=VARCHAR},
+      userName = #{userName,jdbcType=VARCHAR},
+      payerID = #{payerID,jdbcType=VARCHAR},
+      payerEmail = #{payerEmail,jdbcType=VARCHAR},
+      paidFlowNum = #{paidFlowNum,jdbcType=VARCHAR},
+      flowCreatedTime = #{flowCreatedTime,jdbcType=BIGINT},
+      flowPaidTime = #{flowPaidTime,jdbcType=BIGINT},
+      notificationID = #{notificationID,jdbcType=VARCHAR},
+      notificationTime = #{notificationTime,jdbcType=BIGINT},
+      verifyTime = #{verifyTime,jdbcType=INTEGER},
+      orderID = #{orderID,jdbcType=INTEGER}
+    where paidRecordID = #{paidRecordID,jdbcType=INTEGER}
+  </update>
+</mapper>

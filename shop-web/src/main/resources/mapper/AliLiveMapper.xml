@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.AliLiveMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AliLive" >
+    <id column="liveID" property="liveID" jdbcType="INTEGER" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="isOpenLocation" property="isOpenLocation" jdbcType="SMALLINT" />
+    <result column="liveWay" property="liveWay" jdbcType="SMALLINT" />
+    <result column="pushUrl" property="pushUrl" jdbcType="VARCHAR" />
+    <result column="rtmpUrl" property="rtmpUrl" jdbcType="VARCHAR" />
+    <result column="flvUrl" property="flvUrl" jdbcType="VARCHAR" />
+    <result column="m3u8Url" property="m3u8Url" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="products" property="products" jdbcType="VARCHAR" />
+    <result column="limitProducts" property="limitProducts" jdbcType="VARCHAR" />
+    <result column="userType" property="userType" jdbcType="SMALLINT" />
+    <result column="liveTitle" property="liveTitle" jdbcType="VARCHAR" />
+    <result column="coverImage" property="coverImage" jdbcType="VARCHAR" />
+    <result column="userID" property="userID" jdbcType="INTEGER" />
+    <result column="createdTimestamp" property="createdTimestamp" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    liveID, longitude, latitude, isOpenLocation, liveWay, pushUrl, rtmpUrl, flvUrl, m3u8Url, 
+    status, products, limitProducts, userType, liveTitle, coverImage, userID, createdTimestamp
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AliLiveExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_ali_live
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_ali_live
+    where liveID = #{liveID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_ali_live
+    where liveID = #{liveID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AliLiveExample" >
+    delete from ylfs_ali_live
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AliLive" >
+    insert into ylfs_ali_live (liveID, longitude, latitude, 
+      isOpenLocation, liveWay, pushUrl, 
+      rtmpUrl, flvUrl, m3u8Url, 
+      status, products, limitProducts, 
+      userType, liveTitle, coverImage, 
+      userID, createdTimestamp)
+    values (#{liveID,jdbcType=INTEGER}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{isOpenLocation,jdbcType=SMALLINT}, #{liveWay,jdbcType=SMALLINT}, #{pushUrl,jdbcType=VARCHAR}, 
+      #{rtmpUrl,jdbcType=VARCHAR}, #{flvUrl,jdbcType=VARCHAR}, #{m3u8Url,jdbcType=VARCHAR}, 
+      #{status,jdbcType=SMALLINT}, #{products,jdbcType=VARCHAR}, #{limitProducts,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=SMALLINT}, #{liveTitle,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
+      #{userID,jdbcType=INTEGER}, #{createdTimestamp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AliLive" >
+    insert into ylfs_ali_live
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="liveID != null" >
+        liveID,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="isOpenLocation != null" >
+        isOpenLocation,
+      </if>
+      <if test="liveWay != null" >
+        liveWay,
+      </if>
+      <if test="pushUrl != null" >
+        pushUrl,
+      </if>
+      <if test="rtmpUrl != null" >
+        rtmpUrl,
+      </if>
+      <if test="flvUrl != null" >
+        flvUrl,
+      </if>
+      <if test="m3u8Url != null" >
+        m3u8Url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="products != null" >
+        products,
+      </if>
+      <if test="limitProducts != null" >
+        limitProducts,
+      </if>
+      <if test="userType != null" >
+        userType,
+      </if>
+      <if test="liveTitle != null" >
+        liveTitle,
+      </if>
+      <if test="coverImage != null" >
+        coverImage,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="liveID != null" >
+        #{liveID,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpenLocation != null" >
+        #{isOpenLocation,jdbcType=SMALLINT},
+      </if>
+      <if test="liveWay != null" >
+        #{liveWay,jdbcType=SMALLINT},
+      </if>
+      <if test="pushUrl != null" >
+        #{pushUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="rtmpUrl != null" >
+        #{rtmpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flvUrl != null" >
+        #{flvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="m3u8Url != null" >
+        #{m3u8Url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="products != null" >
+        #{products,jdbcType=VARCHAR},
+      </if>
+      <if test="limitProducts != null" >
+        #{limitProducts,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="liveTitle != null" >
+        #{liveTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null" >
+        #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null" >
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AliLiveExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_ali_live
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_ali_live
+    <set >
+      <if test="record.liveID != null" >
+        liveID = #{record.liveID,jdbcType=INTEGER},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOpenLocation != null" >
+        isOpenLocation = #{record.isOpenLocation,jdbcType=SMALLINT},
+      </if>
+      <if test="record.liveWay != null" >
+        liveWay = #{record.liveWay,jdbcType=SMALLINT},
+      </if>
+      <if test="record.pushUrl != null" >
+        pushUrl = #{record.pushUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtmpUrl != null" >
+        rtmpUrl = #{record.rtmpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flvUrl != null" >
+        flvUrl = #{record.flvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.m3u8Url != null" >
+        m3u8Url = #{record.m3u8Url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.products != null" >
+        products = #{record.products,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitProducts != null" >
+        limitProducts = #{record.limitProducts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        userType = #{record.userType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.liveTitle != null" >
+        liveTitle = #{record.liveTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverImage != null" >
+        coverImage = #{record.coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTimestamp != null" >
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_ali_live
+    set liveID = #{record.liveID,jdbcType=INTEGER},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      isOpenLocation = #{record.isOpenLocation,jdbcType=SMALLINT},
+      liveWay = #{record.liveWay,jdbcType=SMALLINT},
+      pushUrl = #{record.pushUrl,jdbcType=VARCHAR},
+      rtmpUrl = #{record.rtmpUrl,jdbcType=VARCHAR},
+      flvUrl = #{record.flvUrl,jdbcType=VARCHAR},
+      m3u8Url = #{record.m3u8Url,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=SMALLINT},
+      products = #{record.products,jdbcType=VARCHAR},
+      limitProducts = #{record.limitProducts,jdbcType=VARCHAR},
+      userType = #{record.userType,jdbcType=SMALLINT},
+      liveTitle = #{record.liveTitle,jdbcType=VARCHAR},
+      coverImage = #{record.coverImage,jdbcType=VARCHAR},
+      userID = #{record.userID,jdbcType=INTEGER},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AliLive" >
+    update ylfs_ali_live
+    <set >
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpenLocation != null" >
+        isOpenLocation = #{isOpenLocation,jdbcType=SMALLINT},
+      </if>
+      <if test="liveWay != null" >
+        liveWay = #{liveWay,jdbcType=SMALLINT},
+      </if>
+      <if test="pushUrl != null" >
+        pushUrl = #{pushUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="rtmpUrl != null" >
+        rtmpUrl = #{rtmpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flvUrl != null" >
+        flvUrl = #{flvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="m3u8Url != null" >
+        m3u8Url = #{m3u8Url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="products != null" >
+        products = #{products,jdbcType=VARCHAR},
+      </if>
+      <if test="limitProducts != null" >
+        limitProducts = #{limitProducts,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        userType = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="liveTitle != null" >
+        liveTitle = #{liveTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null" >
+        coverImage = #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where liveID = #{liveID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AliLive" >
+    update ylfs_ali_live
+    set longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      isOpenLocation = #{isOpenLocation,jdbcType=SMALLINT},
+      liveWay = #{liveWay,jdbcType=SMALLINT},
+      pushUrl = #{pushUrl,jdbcType=VARCHAR},
+      rtmpUrl = #{rtmpUrl,jdbcType=VARCHAR},
+      flvUrl = #{flvUrl,jdbcType=VARCHAR},
+      m3u8Url = #{m3u8Url,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      products = #{products,jdbcType=VARCHAR},
+      limitProducts = #{limitProducts,jdbcType=VARCHAR},
+      userType = #{userType,jdbcType=SMALLINT},
+      liveTitle = #{liveTitle,jdbcType=VARCHAR},
+      coverImage = #{coverImage,jdbcType=VARCHAR},
+      userID = #{userID,jdbcType=INTEGER},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT}
+    where liveID = #{liveID,jdbcType=INTEGER}
+  </update>
+</mapper>

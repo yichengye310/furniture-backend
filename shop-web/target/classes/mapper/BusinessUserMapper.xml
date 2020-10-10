@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.BusinessUserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.BusinessUser" >
+    <id column="userID" property="userID" jdbcType="INTEGER" />
+    <result column="loginAccount" property="loginAccount" jdbcType="VARCHAR" />
+    <result column="loginPassword" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="roleID" property="roleID" jdbcType="INTEGER" />
+    <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="createdTimeStamp" property="createdTimeStamp" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="DTOBaseResultMap" type="com.example.springboot.dto.BusinessUserDTO" >
+    <id column="userID" property="userID" jdbcType="INTEGER" />
+    <result column="loginAccount" property="loginAccount" jdbcType="VARCHAR" />
+    <result column="loginPassword" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="roleID" property="roleID" jdbcType="INTEGER" />
+    <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="createdTimeStamp" property="createdTimeStamp" jdbcType="BIGINT" />
+    <association property="businessRole" javaType="com.example.springboot.entity.BusinessRole" column="roleID" select="com.example.springboot.mapper.BusinessRoleMapper.selectByRoleID" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userID, loginAccount, loginPassword, userName, gender, roleID, phoneNumber, createdTimeStamp
+  </sql>
+  <sql id="selectListSql">
+    SELECT
+    p.*
+    FROM ylfs_business_user p
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+    <if test="loginAccount != null">
+      AND loginAccount = #{loginAccount}
+    </if>
+    <if test="phoneNumber != null">
+      AND phoneNumber = #{phoneNumber}
+    </if>
+    <if test="userName != null">
+      AND userName LIKE CONCAT('%', CONCAT( #{userName}, '%'))
+    </if>
+    <if test="roleID != null">
+      AND roleID = #{roleID}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.BusinessUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_business_user
+    where userID = #{userID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_business_user
+    where userID = #{userID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.BusinessUserExample" >
+    delete from ylfs_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.BusinessUser" >
+    insert into ylfs_business_user (userID, loginAccount, loginPassword, 
+      userName, gender, roleID, 
+      phoneNumber, createdTimeStamp
+      )
+    values (#{userID,jdbcType=INTEGER}, #{loginAccount,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{roleID,jdbcType=INTEGER}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{createdTimeStamp,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.BusinessUser" >
+    insert into ylfs_business_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="loginAccount != null" >
+        loginAccount,
+      </if>
+      <if test="loginPassword != null" >
+        loginPassword,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="roleID != null" >
+        roleID,
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber,
+      </if>
+      <if test="createdTimeStamp != null" >
+        createdTimeStamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        #{userID,jdbcType=INTEGER},
+      </if>
+      <if test="loginAccount != null" >
+        #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="roleID != null" >
+        #{roleID,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimeStamp != null" >
+        #{createdTimeStamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.BusinessUserExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_business_user
+    <set >
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginAccount != null" >
+        loginAccount = #{record.loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null" >
+        loginPassword = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        userName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.roleID != null" >
+        roleID = #{record.roleID,jdbcType=INTEGER},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTimeStamp != null" >
+        createdTimeStamp = #{record.createdTimeStamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_business_user
+    set userID = #{record.userID,jdbcType=INTEGER},
+      loginAccount = #{record.loginAccount,jdbcType=VARCHAR},
+      loginPassword = #{record.loginPassword,jdbcType=VARCHAR},
+      userName = #{record.userName,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      roleID = #{record.roleID,jdbcType=INTEGER},
+      phoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      createdTimeStamp = #{record.createdTimeStamp,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.BusinessUser" >
+    update ylfs_business_user
+    <set >
+      <if test="loginAccount != null" >
+        loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="roleID != null" >
+        roleID = #{roleID,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimeStamp != null" >
+        createdTimeStamp = #{createdTimeStamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where userID = #{userID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.BusinessUser" >
+    update ylfs_business_user
+    set loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      userName = #{userName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      roleID = #{roleID,jdbcType=INTEGER},
+      phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      createdTimeStamp = #{createdTimeStamp,jdbcType=BIGINT}
+    where userID = #{userID,jdbcType=INTEGER}
+  </update>
+  <select id="userListByPage" parameterType="com.example.springboot.entity.BusinessUser" resultMap="DTOBaseResultMap">
+    SELECT * FROM (<include refid="selectListSql"></include>) p
+    <include refid="whereSql"></include>
+  </select>
+</mapper>

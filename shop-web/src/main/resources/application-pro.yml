@@ -1,0 +1,81 @@
+#数据库配置（开发数据库）
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://120.79.99.73:3306/dibang?useUnicode=true&characterEncoding=utf-8&useSSL=false&userAffectRows=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 120.79.99.73
+    port: 6379
+    database: 0
+    password: YLCloud1788%
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 8
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: -1
+        #最大空闲
+        max-idle: 8
+        #最小空闲
+        min-idle: 0
+        #连接超时时间
+        timeout: 10000
+#是否激活 swagger true or false
+swagger.enable: false
+#微信支付配置
+wx:
+  pay:
+    #缔邦
+    #微信开发平台应用ID
+    appId: wx9d84fec95308f0cb
+    #应用对应的凭证
+    appSecret: 46b282c87259718e8f5979db8177f1bd
+    #应用对应的密钥
+    appKey: dibangweixinzhifu1key56484984845
+    #微信支付商户号
+    mchId: 1602376909
+    #商品描述
+    body: 缔邦-微信线上支付
+    #获取预支付id的接口url
+    gateUrl: https://api.mch.weixin.qq.com/pay/unifiedorder
+    #微信服务器回调通知url
+    notifyUrl: http://120.79.99.73:8084/wxPay/notify
+    #查询订单地址
+    orderQueryUrl: https://api.mch.weixin.qq.com/pay/orderquery
+    #微信申请退款url
+    refundUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
+    #证书地址
+    wxCertPath: /WEB-INF/cert/apiclient_cert.p12
+#支付宝支付配置
+ali:
+  pay:
+    #支付宝应用网关（沙箱）
+    gatewayUrl: https://openapi.alipaydev.com/gateway.do
+    #支付宝应用网关（正式）
+    gatewayFormalUrl: https://openapi.alipay.com/gateway.do
+    #商户应用id
+#    appId: 2016103000778556
+    appId: 2021001169632785
+    #开发者应用私钥 (格式为pkcs8)
+    appPrivateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCjfOVZV/XDzSbVuAft/YtZ9qcgNKQpXwYULXAsMZIaWCtIJzEP0v5elc+09zd2StNUOk5ZTCXCurQSzZq1tvEXHowDz+Y2zaiAP6B1zJhmEoMqN30Z9kKbtzDNcRw5JpLBdlrFoLqOhbgsAboUM8FVRAFZlpLWTHvoK3S9Id4QKYMek+ckAe+SsFkQza/j+v+zkVXR6Y703g9vrIIzbfHBVIr/AyhV+WOIGbnfvZHj1zZ7lgLJVRT3koU7PyTT9chZNdWVdC73mnWceVr3JiMi+ydIKBpZ1uVGQsYK8I1UNl6SKcWFgu7HvUnjqBp+SKvN97kk7QBtHQXf4wvW8JflAgMBAAECggEAJJAtNvMOGvFJyyhyVY6L2N3p+LDtOfdvg5m56ZhYhZ3MaEGjnldg3kSBBIb5l3Iam07C8QOvukJJPZ9QB23Xs4T4aW3Ync8W7T/NoirUtpdTUGDCkMjbkrnAp2GxnzJ6RdwzZtmQf4l2bBkixZvhlDE2YBPl2RmX6I+3dwkZAeH64Nnew0N0pNIS5SdTUZzBFtCIuebUw9LTM/zQYKqfZn7otYxIVrlSUYs1l/+0Om/4H1b1kP1Hc4IhP7yOTM5cAIV1E2lyifRhWwR1ashj9Fw3z+tmYr0tpm3Rp0aId5leRfyeoeJ/spQ9YlCY51tUmxPW56R7boaE+jH7hFTRTQKBgQDiSwCAJ8kWZqC9kR4tjb4rox4LkRXYhA7CZ4tWuPjJ5fwEI8IYkTR2cXZWWKBnSyWMlLw0dMPiBNm9JWh0RQVsNLSNTGr0lHgoG/FxFXB04Itr28J1xwqJr9NLdqh49zT4SZ7FQhBIe8uX+CWEVNtT1f6xtTfGIFZ/z1FhX96QnwKBgQC48zYSBytiNLqj1/SG2B0q6bwUQg6vE3X6oVL1jV+VfTu4v77IxNzNLifiRnv8U49VRfgy1LflZw2VYjiaj/C/Xo3dbiRscBzZEP70ZFvx1w1XwnvI1J40pSsq6jYYEFUU5x6CL0WzArXFBKTi1q+ypTF/QzcRsPG1XidoTFe0+wKBgBudx5vcPyAquicoVKR+jdzJdVs4A5B+3UZAWLLmtAX/uTfQHVneLqbdxfFXs4unkheL90P3lAg7S09YB11ZJwZDkF1GHC9pBxjuABMq6KR62sj48sxo1BJlkMW+32ST1rUOVv//xfjykrAjKoDx0ipzDTgmw328aJIEfQwDJShFAoGALRxdVt5azZRQ5b+5y94QlzP1hPdrv3Y+s4f/xRbbdonaNEDIlw21UXJtlfpdKXl0H3d2h2dtB04wePxBFCoBrZuxfI3t4mkiECveE9watQ0gGwS7zotVnz+eHNSNpybsqbGJtnUzSetiTJDKau20Yx15yjGpz+3ZtsQlVoIwblsCgYBaEhLRi/IHjpp8QQow2TtG050wZ0z6imD4eNrjuyCZHKxGqMlqL9r8ML27tQ9Xdloh81CeM3fZLX9/J0IxGDwXJ8HhufCFHYgbwpOhTEKeXC2BZ7wyggjMBE71D9Q+hQ4RQDHwCQhZYZxtu9LV8Qtgvb/DAcdtsx21bOHG5QJZpg==
+    #支付宝公钥
+    aliPayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArwf0PSOC+3/Mevrms9LmVM6D7kQIeoV6n4s+CIVxJ874htAhYkjW+WLUSPjGlwhcVwY1m3Mcrec+zzVQSM1kSgZAHapC3Px75f4g5g77le8nSfDUFJHTxff67nRYDUfLcQCPHk3nQ+WCBpTEO9Jhx2e0hkUBBT0Uq/51PAZKIP3eVXuVcwxbazXq3IY5orFUvOgWPOMSWw22GTftrEgsZaXbUFacum28pmdiK1IKqTYWrsgQ4hUfVf9/1qNowTmz4RanmlFjHcfBq884ibgeTZUyklJCJQ01QA3qyCRfr1HIkN0hDcnAS2XPnMgxKUrHhjjr2Ug7ovvexLlDRMpzYQIDAQAB
+    #同步地址
+    returnUrl: http://localhost:8081/alipay/return
+    #异步地址
+    notifyUrl: http://120.79.99.73:8084/zfbPay/notify
+    #请求支付宝接口返回数据格式，只支持 json
+    format: json
+    #编码集，支持 GBK/UTF-8
+    charset: UTF-8
+    #商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA，推荐使用 RSA2
+    signType: RSA2
+#网易云信直播配置
+wyyx:
+  live:
+    appKey: 44ee104b65e93058d8724be101f0fcef
+    appSecret: 963d8462f4f8
+    nonce: ylwhcm

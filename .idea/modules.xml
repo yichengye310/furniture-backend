@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FurnitureShop.iml" filepath="$PROJECT_DIR$/FurnitureShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-alipay/shop-alipay.iml" filepath="$PROJECT_DIR$/shop-alipay/shop-alipay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-base/shop-base.iml" filepath="$PROJECT_DIR$/shop-base/shop-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-live/shop-live.iml" filepath="$PROJECT_DIR$/shop-live/shop-live.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-web/shop-web.iml" filepath="$PROJECT_DIR$/shop-web/shop-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-wxpay/shop-wxpay.iml" filepath="$PROJECT_DIR$/shop-wxpay/shop-wxpay.iml" />
+    </modules>
+  </component>
+</project>

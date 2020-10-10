@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.UserProductsCollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.UserProductsCollection" >
+    <id column="collectedProductID" property="collectedProductID" jdbcType="INTEGER" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="productID" property="productID" jdbcType="INTEGER" />
+    <result column="createdTimestamp" property="createdTimestamp" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="DTOBaseResultMap" type="com.example.springboot.dto.UserProductsCollectionDTO" >
+    <id column="collectedProductID" property="collectedProductID" jdbcType="INTEGER" />
+    <result column="userID" property="userID" jdbcType="VARCHAR" />
+    <result column="productID" property="productID" jdbcType="INTEGER" />
+    <result column="createdTimestamp" property="createdTimestamp" jdbcType="BIGINT" />
+    <association property="product" javaType="com.example.springboot.entity.Product" column="productID" select="com.example.springboot.mapper.ProductMapper.selectByPrimaryKey" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    collectedProductID, userID, productID, createdTimestamp
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+    <if test="userID != null">
+      AND userID = #{userID}
+    </if>
+    <if test="productID != null">
+      AND productID = #{productID}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.UserProductsCollectionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_user_collection
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_user_collection
+    where collectedProductID = #{collectedProductID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_user_collection
+    where collectedProductID = #{collectedProductID,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.UserProductsCollectionExample" >
+    delete from ylfs_user_collection
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    insert into ylfs_user_collection (collectedProductID, userID, productID, 
+      createdTimestamp)
+    values (#{collectedProductID,jdbcType=INTEGER}, #{userID,jdbcType=VARCHAR}, #{productID,jdbcType=INTEGER}, 
+      #{createdTimestamp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    insert into ylfs_user_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collectedProductID != null" >
+        collectedProductID,
+      </if>
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="productID != null" >
+        productID,
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collectedProductID != null" >
+        #{collectedProductID,jdbcType=INTEGER},
+      </if>
+      <if test="userID != null" >
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="productID != null" >
+        #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null" >
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.UserProductsCollectionExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_user_collection
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_user_collection
+    <set >
+      <if test="record.collectedProductID != null" >
+        collectedProductID = #{record.collectedProductID,jdbcType=INTEGER},
+      </if>
+      <if test="record.userID != null" >
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productID != null" >
+        productID = #{record.productID,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdTimestamp != null" >
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_user_collection
+    set collectedProductID = #{record.collectedProductID,jdbcType=INTEGER},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      productID = #{record.productID,jdbcType=INTEGER},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    update ylfs_user_collection
+    <set >
+      <if test="userID != null" >
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="productID != null" >
+        productID = #{productID,jdbcType=INTEGER},
+      </if>
+      <if test="createdTimestamp != null" >
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where collectedProductID = #{collectedProductID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    update ylfs_user_collection
+    set userID = #{userID,jdbcType=VARCHAR},
+      productID = #{productID,jdbcType=INTEGER},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT}
+    where collectedProductID = #{collectedProductID,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByUserIDAndProductID" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    delete from ylfs_user_collection
+    where userID = #{userID,jdbcType=VARCHAR}
+    and productID = #{productID,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByUserIDAndProductID" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.UserProductsCollection" >
+    select
+    <include refid="Base_Column_List" />
+    from ylfs_user_collection
+    where userID = #{userID,jdbcType=VARCHAR}
+    and productID = #{productID,jdbcType=INTEGER}
+  </select>
+  <select id="collectionListByPage" resultMap="DTOBaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    from ylfs_user_collection
+    <include refid="whereSql"></include>
+  </select>
+</mapper>

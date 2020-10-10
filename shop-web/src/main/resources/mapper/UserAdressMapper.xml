@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.UserAdressMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.UserAdress">
+    <id column="userAddressID" jdbcType="INTEGER" property="userAddressID" />
+    <result column="userID" jdbcType="VARCHAR" property="userID" />
+    <result column="usual" jdbcType="SMALLINT" property="usual" />
+    <result column="receiverName" jdbcType="VARCHAR" property="receiverName" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="provinceID" jdbcType="INTEGER" property="provinceID" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="cityID" jdbcType="INTEGER" property="cityID" />
+    <result column="county" jdbcType="VARCHAR" property="county" />
+    <result column="countyID" jdbcType="INTEGER" property="countyID" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="postCode" jdbcType="VARCHAR" property="postCode" />
+    <result column="mobilePhone" jdbcType="VARCHAR" property="mobilePhone" />
+    <result column="state" jdbcType="SMALLINT" property="state" />
+    <result column="createdTimestamp" jdbcType="BIGINT" property="createdTimestamp" />
+    <result column="lastModified" jdbcType="BIGINT" property="lastModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userAddressID, userID, usual, receiverName, province, provinceID, city, cityID, county, 
+    countyID, address, postCode, mobilePhone, state, createdTimestamp, lastModified
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.UserAdressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_user_adress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_user_adress
+    where userAddressID = #{userAddressID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_user_adress
+    where userAddressID = #{userAddressID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.UserAdressExample">
+    delete from ylfs_user_adress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.UserAdress">
+    insert into ylfs_user_adress (userAddressID, userID, usual, 
+      receiverName, province, provinceID, 
+      city, cityID, county, 
+      countyID, address, postCode, 
+      mobilePhone, state, createdTimestamp, 
+      lastModified)
+    values (#{userAddressID,jdbcType=INTEGER}, #{userID,jdbcType=VARCHAR}, #{usual,jdbcType=SMALLINT}, 
+      #{receiverName,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{provinceID,jdbcType=INTEGER}, 
+      #{city,jdbcType=VARCHAR}, #{cityID,jdbcType=INTEGER}, #{county,jdbcType=VARCHAR}, 
+      #{countyID,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, 
+      #{mobilePhone,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, #{createdTimestamp,jdbcType=BIGINT}, 
+      #{lastModified,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.UserAdress">
+    insert into ylfs_user_adress
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userAddressID != null">
+        userAddressID,
+      </if>
+      <if test="userID != null">
+        userID,
+      </if>
+      <if test="usual != null">
+        usual,
+      </if>
+      <if test="receiverName != null">
+        receiverName,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="provinceID != null">
+        provinceID,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="cityID != null">
+        cityID,
+      </if>
+      <if test="county != null">
+        county,
+      </if>
+      <if test="countyID != null">
+        countyID,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="postCode != null">
+        postCode,
+      </if>
+      <if test="mobilePhone != null">
+        mobilePhone,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp,
+      </if>
+      <if test="lastModified != null">
+        lastModified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userAddressID != null">
+        #{userAddressID,jdbcType=INTEGER},
+      </if>
+      <if test="userID != null">
+        #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="usual != null">
+        #{usual,jdbcType=SMALLINT},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceID != null">
+        #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityID != null">
+        #{cityID,jdbcType=INTEGER},
+      </if>
+      <if test="county != null">
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="countyID != null">
+        #{countyID,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null">
+        #{lastModified,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.UserAdressExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_user_adress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_user_adress
+    <set>
+      <if test="record.userAddressID != null">
+        userAddressID = #{record.userAddressID,jdbcType=INTEGER},
+      </if>
+      <if test="record.userID != null">
+        userID = #{record.userID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usual != null">
+        usual = #{record.usual,jdbcType=SMALLINT},
+      </if>
+      <if test="record.receiverName != null">
+        receiverName = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceID != null">
+        provinceID = #{record.provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityID != null">
+        cityID = #{record.cityID,jdbcType=INTEGER},
+      </if>
+      <if test="record.county != null">
+        county = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countyID != null">
+        countyID = #{record.countyID,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postCode != null">
+        postCode = #{record.postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        mobilePhone = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createdTimestamp != null">
+        createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModified != null">
+        lastModified = #{record.lastModified,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_user_adress
+    set userAddressID = #{record.userAddressID,jdbcType=INTEGER},
+      userID = #{record.userID,jdbcType=VARCHAR},
+      usual = #{record.usual,jdbcType=SMALLINT},
+      receiverName = #{record.receiverName,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      provinceID = #{record.provinceID,jdbcType=INTEGER},
+      city = #{record.city,jdbcType=VARCHAR},
+      cityID = #{record.cityID,jdbcType=INTEGER},
+      county = #{record.county,jdbcType=VARCHAR},
+      countyID = #{record.countyID,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      postCode = #{record.postCode,jdbcType=VARCHAR},
+      mobilePhone = #{record.mobilePhone,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT},
+      createdTimestamp = #{record.createdTimestamp,jdbcType=BIGINT},
+      lastModified = #{record.lastModified,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.UserAdress">
+    update ylfs_user_adress
+    <set>
+      <if test="userID != null">
+        userID = #{userID,jdbcType=VARCHAR},
+      </if>
+      <if test="usual != null">
+        usual = #{usual,jdbcType=SMALLINT},
+      </if>
+      <if test="receiverName != null">
+        receiverName = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceID != null">
+        provinceID = #{provinceID,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityID != null">
+        cityID = #{cityID,jdbcType=INTEGER},
+      </if>
+      <if test="county != null">
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="countyID != null">
+        countyID = #{countyID,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        postCode = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+        mobilePhone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="createdTimestamp != null">
+        createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="lastModified != null">
+        lastModified = #{lastModified,jdbcType=BIGINT},
+      </if>
+    </set>
+    where userAddressID = #{userAddressID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.UserAdress">
+    update ylfs_user_adress
+    set userID = #{userID,jdbcType=VARCHAR},
+      usual = #{usual,jdbcType=SMALLINT},
+      receiverName = #{receiverName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      provinceID = #{provinceID,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      cityID = #{cityID,jdbcType=INTEGER},
+      county = #{county,jdbcType=VARCHAR},
+      countyID = #{countyID,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      postCode = #{postCode,jdbcType=VARCHAR},
+      mobilePhone = #{mobilePhone,jdbcType=VARCHAR},
+      state = #{state,jdbcType=SMALLINT},
+      createdTimestamp = #{createdTimestamp,jdbcType=BIGINT},
+      lastModified = #{lastModified,jdbcType=BIGINT}
+    where userAddressID = #{userAddressID,jdbcType=INTEGER}
+  </update>
+</mapper>

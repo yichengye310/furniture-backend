@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.VersionMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.Version">
+    <id column="versionID" jdbcType="INTEGER" property="versionID" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="versionNum" jdbcType="VARCHAR" property="versionNum" />
+    <result column="downloadUrl" jdbcType="VARCHAR" property="downloadUrl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    versionID, content, versionNum, downloadUrl
+  </sql>
+  <select id="selectByExample" parameterType="com.example.springboot.entity.VersionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_version
+    where versionID = #{versionID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ylfs_version
+    where versionID = #{versionID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.VersionExample">
+    delete from ylfs_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.Version">
+    insert into ylfs_version (versionID, content, versionNum, 
+      downloadUrl)
+    values (#{versionID,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{versionNum,jdbcType=VARCHAR}, 
+      #{downloadUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.Version">
+    insert into ylfs_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="versionID != null">
+        versionID,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="versionNum != null">
+        versionNum,
+      </if>
+      <if test="downloadUrl != null">
+        downloadUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="versionID != null">
+        #{versionID,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null">
+        #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.VersionExample" resultType="java.lang.Integer">
+    select count(*) from ylfs_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ylfs_version
+    <set>
+      <if test="record.versionID != null">
+        versionID = #{record.versionID,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionNum != null">
+        versionNum = #{record.versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloadUrl != null">
+        downloadUrl = #{record.downloadUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ylfs_version
+    set versionID = #{record.versionID,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      versionNum = #{record.versionNum,jdbcType=VARCHAR},
+      downloadUrl = #{record.downloadUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.Version">
+    update ylfs_version
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null">
+        versionNum = #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        downloadUrl = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where versionID = #{versionID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.Version">
+    update ylfs_version
+    set content = #{content,jdbcType=VARCHAR},
+      versionNum = #{versionNum,jdbcType=VARCHAR},
+      downloadUrl = #{downloadUrl,jdbcType=VARCHAR}
+    where versionID = #{versionID,jdbcType=INTEGER}
+  </update>
+</mapper>

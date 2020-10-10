@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.mapper.ProductLimitedTimeStandardsMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.ProductLimitedTimeStandards" >
+    <id column="standardID" property="standardID" jdbcType="INTEGER" />
+    <result column="bandProductID" property="bandProductID" jdbcType="INTEGER" />
+    <result column="originalPrice" property="originalPrice" jdbcType="BIGINT" />
+    <result column="discountPrice" property="discountPrice" jdbcType="BIGINT" />
+    <result column="tradePrice" property="tradePrice" jdbcType="BIGINT" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+  </resultMap>
+  <resultMap id="DTOBaseResultMap" type="com.example.springboot.dto.ProductLimitedTimeStandardsDTO" >
+    <id column="standardID" property="standardID" jdbcType="INTEGER" />
+    <result column="bandProductID" property="bandProductID" jdbcType="INTEGER" />
+    <result column="originalPrice" property="originalPrice" jdbcType="BIGINT" />
+    <result column="discountPrice" property="discountPrice" jdbcType="BIGINT" />
+    <result column="tradePrice" property="tradePrice" jdbcType="BIGINT" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <collection property="productLimitedTimeStandardsColour" ofType="com.example.springboot.entity.ProductLimitedTimeStandardsColour" column="{bandStandardID=standardID}" select="com.example.springboot.mapper.ProductLimitedTimeStandardsColourMapper.selectByBandStandardID" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    standardID, bandProductID, originalPrice, discountPrice, tradePrice, standard, state
+  </sql>
+  <sql id="whereSql">
+    WHERE 1 = 1
+    <if test="standardID != null">
+      AND standardID = #{standardID}
+    </if>
+    <if test="bandProductID != null">
+      AND bandProductID = #{bandProductID}
+    </if>
+      AND state = 1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.ProductLimitedTimeStandardsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ylfs_product_limited_time_standards
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ylfs_product_limited_time_standards
+    where standardID = #{standardID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ylfs_product_limited_time_standards
+    where standardID = #{standardID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.ProductLimitedTimeStandardsExample" >
+    delete from ylfs_product_limited_time_standards
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.ProductLimitedTimeStandards" >
+    insert into ylfs_product_limited_time_standards (standardID, bandProductID, originalPrice, 
+      discountPrice, tradePrice, standard, 
+      state)
+    values (#{standardID,jdbcType=INTEGER}, #{bandProductID,jdbcType=INTEGER}, #{originalPrice,jdbcType=BIGINT}, 
+      #{discountPrice,jdbcType=BIGINT}, #{tradePrice,jdbcType=BIGINT}, #{standard,jdbcType=VARCHAR}, 
+      #{state,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="standardID" parameterType="com.example.springboot.entity.ProductLimitedTimeStandards" >
+    insert into ylfs_product_limited_time_standards
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="standardID != null" >
+        standardID,
+      </if>
+      <if test="bandProductID != null" >
+        bandProductID,
+      </if>
+      <if test="originalPrice != null" >
+        originalPrice,
+      </if>
+      <if test="discountPrice != null" >
+        discountPrice,
+      </if>
+      <if test="tradePrice != null" >
+        tradePrice,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="standardID != null" >
+        #{standardID,jdbcType=INTEGER},
+      </if>
+      <if test="bandProductID != null" >
+        #{bandProductID,jdbcType=INTEGER},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=BIGINT},
+      </if>
+      <if test="tradePrice != null" >
+        #{tradePrice,jdbcType=BIGINT},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.ProductLimitedTimeStandardsExample" resultType="java.lang.Integer" >
+    select count(*) from ylfs_product_limited_time_standards
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ylfs_product_limited_time_standards
+    <set >
+      <if test="record.standardID != null" >
+        standardID = #{record.standardID,jdbcType=INTEGER},
+      </if>
+      <if test="record.bandProductID != null" >
+        bandProductID = #{record.bandProductID,jdbcType=INTEGER},
+      </if>
+      <if test="record.originalPrice != null" >
+        originalPrice = #{record.originalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountPrice != null" >
+        discountPrice = #{record.discountPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.tradePrice != null" >
+        tradePrice = #{record.tradePrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.standard != null" >
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ylfs_product_limited_time_standards
+    set standardID = #{record.standardID,jdbcType=INTEGER},
+      bandProductID = #{record.bandProductID,jdbcType=INTEGER},
+      originalPrice = #{record.originalPrice,jdbcType=BIGINT},
+      discountPrice = #{record.discountPrice,jdbcType=BIGINT},
+      tradePrice = #{record.tradePrice,jdbcType=BIGINT},
+      standard = #{record.standard,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.ProductLimitedTimeStandards" >
+    update ylfs_product_limited_time_standards
+    <set >
+      <if test="bandProductID != null" >
+        bandProductID = #{bandProductID,jdbcType=INTEGER},
+      </if>
+      <if test="originalPrice != null" >
+        originalPrice = #{originalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountPrice != null" >
+        discountPrice = #{discountPrice,jdbcType=BIGINT},
+      </if>
+      <if test="tradePrice != null" >
+        tradePrice = #{tradePrice,jdbcType=BIGINT},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where standardID = #{standardID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.ProductLimitedTimeStandards" >
+    update ylfs_product_limited_time_standards
+    set bandProductID = #{bandProductID,jdbcType=INTEGER},
+      originalPrice = #{originalPrice,jdbcType=BIGINT},
+      discountPrice = #{discountPrice,jdbcType=BIGINT},
+      tradePrice = #{tradePrice,jdbcType=BIGINT},
+      standard = #{standard,jdbcType=VARCHAR},
+      state = #{state,jdbcType=SMALLINT}
+    where standardID = #{standardID,jdbcType=INTEGER}
+  </update>
+  <select id="selectByBandProductLimitedTimeID" resultMap="DTOBaseResultMap"  >
+    select
+    s.*
+    from ylfs_product_limited_time_standards s
+    where bandProductID = #{bandProductID,jdbcType=INTEGER} and state =1 ORDER BY originalPrice ASC
+  </select>
+  <select id="selectByProductLimitedTimeID" parameterType="com.example.springboot.entity.ProductLimitedTimeStandards" resultMap="BaseResultMap"  >
+    select
+    s.*
+    from ylfs_product_limited_time_standards s
+    <include refid="whereSql"></include>
+  </select>
+</mapper>
