@@ -30,13 +30,13 @@ wx:
   pay:
     #缔邦
     #微信开发平台应用ID
-    appId: wx9d84fec95308f0cb
+    appId: wx8fa31de5c7e4d28f
     #应用对应的凭证
-    appSecret: 46b282c87259718e8f5979db8177f1bd
+    appSecret: 9793acfdbd35d7968b7553395155a01b
     #应用对应的密钥
-    appKey: dibangweixinzhifu1key56484984845
+    appKey: qiaoliweixinzhifu1key56484984845
     #微信支付商户号
-    mchId: 1602376909
+    mchId: 1603490843
     #商品描述
     body: 缔邦-微信线上支付
     #获取预支付id的接口url
